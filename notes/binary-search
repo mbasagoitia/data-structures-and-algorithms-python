@@ -1,0 +1,13 @@
+# Binary search
+
+## Searching algorithm with O log(n) time complexity
+
+1. Calculate middle element and initialize left and right pointers
+2. Compare x with middle element
+3. If x matches middle element, return it
+4. If x is greater than the middle element, ignore the left half of the array and search the right half and vice versa
+5. Apply algorithm again for right half (or left half) if x is smaller
+
+Iterative and a recursive solution
+
+The array must be sorted to perform binary search
