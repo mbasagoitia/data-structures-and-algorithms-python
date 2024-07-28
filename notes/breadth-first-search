@@ -1,0 +1,17 @@
+# Breadth-First Search
+
+## Searching algorithm for traversing tree or graph data structures
+
+The searching starts at the root of the tree or an arbitrary node (search key), exploring neighbor nodes before moving on to the next-level neighbors
+
+## Applications
+
+- Cheney's algorithm
+- Finding the shortest path between two nodes, measured by the total number of edges
+- Serialization/deserialization of a binary tree
+
+Iterative implementation uses a queue (FIFO), reads the information of the queue's first element (starting with the tree root), enqueues its left and right children, and continues until no more levels are left in the tree
+
+The time complexity of BFS traversal is O(V + E), or essentially O(N), where V and E are the total number of vertices and edges in the graph. We are only visiting every node a single time.
+
+Space complexity: O(N)
