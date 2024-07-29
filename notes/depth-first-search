@@ -1,0 +1,9 @@
+# Depth-First Search
+
+## Depth–first search (DFS) is an algorithm for traversing or searching tree or graph data structures. One starts at the root (selecting some arbitrary node as the root for a graph) and explore as far as possible along each branch before backtracking.
+
+- Preorder: visit each node before its children.
+- Postorder: visit each node after its children.
+- Inorder (for binary trees only): visit left subtree, node, right subtree.
+
+Implementation involves using a stack (LIFO)
