@@ -1,0 +1,13 @@
+# Merge Sort
+
+## Sorting algorithm that recursively splits an array into smaller subarrays and sorts subarrays, joining them into sorted result
+
+Divide and conquer algorithm--problems divided into smaller subproblems recursively until subproblems become easy to solve, which are then combined to solve original problem
+
+O(n * log(n)) time complexity
+
+1. Split array in half
+2. Call merge sort on each half to sort them recursively
+3. Merge both sorted halves into one sorted array by comparing leftmost elements in subarrays
+
+This works because an array with a single element is considered sorted, and each subsequent subarray that is joined together is SORTED (which allows us to compare leftmost elements)
