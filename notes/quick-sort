@@ -1,0 +1,12 @@
+# Quick Sort
+
+## Sorting algorithm used to recursively sort arrays in place with O(n log(n)) time complexity (average)
+## Though worst case is O(n**2)
+
+- Divide and conquer algorithm
+
+1. Choose pivot element (last or random)
+2. Store elements less than pivot in left subarray
+3. Store elements greater than pivot in right subarray
+4. Call quicksort recursively on left subarray
+5. Call quicksort recursively on right subarray
