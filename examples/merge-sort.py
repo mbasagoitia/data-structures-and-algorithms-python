@@ -1,77 +1,48 @@
 def merge_sort(arr):
-    # Base case for recursion. Array is sorted if it is of length 1
-    if len(arr) > 1:
-        # Slice of original array from beginning to midpoint (exclusive)
-        left_arr = arr[:len(arr)//2]
-        # Slice of original array from midpoint (inclusive) to end
-        right_arr = arr[len(arr)//2:]
+    # Base case: if the array has one or zero elements, it's already sorted
+    if len(arr) <= 1:
+        return arr
 
-        # Recursive call to merge sort
-        merge_sort(left_arr)
-        merge_sort(right_arr)
+    # Split the array into two halves
+    mid = len(arr) // 2
+    left_half = arr[:mid]
+    right_half = arr[mid:]
 
-        # Merging subarrays by comparing leftmost elements of each array
+    # Recursively split and sort both halves
+    sorted_left = merge_sort(left_half)
+    sorted_right = merge_sort(right_half)
 
-        # Current index of left array
-        i = 0
-        # Current index of right array
-        j = 0
-        # Current index of merged array
-        k = 0
+    # Merge the sorted halves
+    return merge(sorted_left, sorted_right)
 
-        # Loop runs until it has evaluated every number in each array
-        while i < len(left_arr) and j < len(right_arr):
-            if left_arr[i] < right_arr[j]:
-                arr[k] = left_arr[i]
-                i += 1
-            else:
-                arr[k] = right_arr[j]
-                j += 1
-            k += 1
+def merge(left, right):
+    # Initialize an empty result list and pointers for left and right arrays
+    result = []
+    i = 0
+    j = 0
 
-        # If there are still elements left in the left subarray
-        while i < len(left_arr):
-            arr[k] = left_arr[i]
+    # Merge the two lists until one is exhausted
+    while i < len(left) and j < len(right):
+        if left[i] < right[j]:
+            result.append(left[i])
             i += 1
-            k += 1
-        
-        # If there are still elements left in the right subarray (must be larger than what's already in merged array)
-        while j < len(right_arr):
-            arr[k] = right_arr[j]
+        else:
+            result.append(right[j])
             j += 1
-            k += 1
 
-# Without comments
+    # Append any remaining elements in the left list
+    while i < len(left):
+        result.append(left[i])
+        i += 1
 
-def merge_sort(arr):
+    # Append any remaining elements in the right list
+    while j < len(right):
+        result.append(right[j])
+        j += 1
 
-    if len(arr) > 1:
+    return result
 
-        left_arr = arr[:len(arr) // 2]
-        right_arr = arr[len(arr) // 2:]
-
-        merge_sort(left_arr)
-        merge_sort(right_arr)
-
-        i = 0
-        j = 0
-        k = 0
-
-        while i < len(left_arr) and j < len(right_arr):
-            if left_arr[i] < right_arr[j]:
-                arr[k] = left_arr[i]
-                i += 1
-            else:
-                arr[k] = right_arr[j]
-                j += 1
-            k += 1
-
-        while i < len(left_arr):
-            arr[k] = left_arr[i]
-            i += 1
-            k += 1
-
-        while j < len(right_arr):
-            arr[k] = right_arr[j]
-            j += 1
-            k += 1
+# Example usage
+arr = [38, 27, 43, 3, 9, 82, 10]
+sorted_arr = merge_sort(arr)
+print("Sorted array:", sorted_arr)
