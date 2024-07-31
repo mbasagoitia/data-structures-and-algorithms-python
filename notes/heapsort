@@ -1,0 +1,13 @@
+# Heapsort
+
+## Comparison-based sorting algorithm that uses the heap data structure and nvolves building a heap and then repeatedly extracting the maximum (or minimum) element.
+
+- Build a Max-Heap: Transform the input array into a max-heap. This ensures that the largest element is at the root.
+- Extract Max: Swap the root of the max-heap with the last element of the heap (the current end of the heap), reduce the heap size by one, and restore the heap property (heapify the root).
+- Repeat: Continue extracting the maximum element and restoring the heap property until all elements are sorted.
+
+A heap can map to an array to store its values at specified indices, so certain equations can give us the index of each "node" (index) without having to implement a node class
+
+- Parent: (index - 1) // 2
+- Left child: (index * 2) + 1
+- Right child: (index * 2) + 2
