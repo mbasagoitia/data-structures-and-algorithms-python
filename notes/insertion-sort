@@ -1,0 +1,5 @@
+# Insertion Sort
+
+## Simple sorting algorithm for arrays with quadratic running time (O(n^2))
+
+Divides the array into two parts--a sorted part and an unsorted part, then moves through the unsorted part and swaps elements as necessary.
