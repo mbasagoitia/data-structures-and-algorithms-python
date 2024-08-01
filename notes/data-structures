@@ -1,0 +1,47 @@
+# Basics of Data Structures
+
+Data structures can store primitive values or user-defined objects and are generally language-specific.
+Many languages implement useful data structures as first-class objects
+
+## Common operations
+
+- Insert
+- Find
+- Remove
+- Modify
+- Iterate
+
+## Python Built-in Data Structures
+
+Python's list is an implementation of a dynamic array, meaning it is of dynamic (not static) size.
+
+- List
+
+Operations:
+    - Append (append(x)); has O(1) constant time complexity because other items don't shift over (unless allocated space is taken up, see below), with worst-cast O(n)
+    - Insert at arbitrary position (insert(index, x)); has a worst-case complexity of o(n) because if you insert at beginning, every other element has to shift over
+    - Remove/delete from end (pop()); constant time
+    - Remove/delete from arbitrary position; worst-case of linear time
+    - Access nth element
+    - Iterate over elements
+
+Python allocates extra space in memory, allowing it to dynamically resize as needed.
+If this space is used up, memory must be reallocated (2n if original array was of length n), an optimistic guess at future size, and old memory is copied over to new memory location (O(n) time)
+
+- Dictionary
+
+Python's dictionary is an implementation of a hash table
+
+Associates a key to some value
+
+Operations:
+    - Find the value associated with a key
+    - Add/remove/replace a key-value binding
+    - Iterate over keys
+
+## Other Examples of Data Structures Covered in this Module
+
+- Heaps
+- Tree-based data structures
+- Hashtables
+- Spatial data structures
