@@ -77,3 +77,51 @@ def merge(left, right):
 
     return result
 
+
+# Another implementation, modifies array in-place
+
+def merge_sort(arr, left, right):
+    # Base case: check if the subarray has 1 or 0 elements (already sorted, do nothing)
+    if left >= right:
+        return
+    
+    # Calculate the midpoint to split the array into two halves
+    mid = (left + right) // 2
+    
+    # Recursively sort the left half
+    merge_sort(arr, left, mid)
+    
+    # Recursively sort the right half
+    merge_sort(arr, mid + 1, right)
+    
+    # Merge the sorted halves back into the original array
+    merge(arr, left, mid, right)
+
+def merge(arr, left, mid, right):
+    # Initialize pointers for traversing the left (i) and right (j) halves
+    i = left
+    j = mid + 1
+    temp = []
+
+    # Merge elements from the two halves into temp in sorted order
+    while i <= mid and j <= right:
+        if arr[i] <= arr[j]:
+            temp.append(arr[i])
+            i += 1
+        else:
+            temp.append(arr[j])
+            j += 1
+
+    # Append any remaining elements from the left half
+    while i <= mid:
+        temp.append(arr[i])
+        i += 1
+
+    # Append any remaining elements from the right half
+    while j <= right:
+        temp.append(arr[j])
+        j += 1
+
+    # Copy the sorted elements from temp back to the original array, offset by left
+    for k in range(len(temp)):
+        arr[left + k] = temp[k]

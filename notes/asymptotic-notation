@@ -1,0 +1,44 @@
+# Asymptotic Notation
+
+Asymptotic notation is used to describe the time and space complexity of algorithms, providing a way to compare their performance as the input size grows.
+
+### Big O Notation (O)
+
+- **Definition**: A function \( f(n) \) is said to be \( O(g(n)) \) (Big O of \( g(n) \)) if there exist positive constants \( c \) and \( n_0 \) such that \( f(n) \leq c \cdot g(n) \) for all \( n \geq n_0 \). This denotes an asymptotic upper bound.
+- **Usage**: Used to express the worst-case complexity of an algorithm.
+
+### Omega Notation (Ω)
+
+- **Definition**: A function \( f(n) \) is said to be \( \Omega(g(n)) \) (Omega of \( g(n) \)) if there exist positive constants \( c \) and \( n_0 \) such that \( f(n) \geq c \cdot g(n) \) for all \( n \geq n_0 \). This denotes an asymptotic lower bound.
+- **Usage**: Used to express the best-case complexity or a lower bound for an algorithm.
+
+### Theta Notation (Θ)
+
+- **Definition**: A function \( f(n) \) is said to be \( \Theta(g(n)) \) (Theta of \( g(n) \)) if there exist positive constants \( c_1 \), \( c_2 \), and \( n_0 \) such that \( c_1 \cdot g(n) \leq f(n) \leq c_2 \cdot g(n) \) for all \( n \geq n_0 \). This denotes an asymptotic tight bound.
+- **Usage**: Used to express both the upper and lower bounds of an algorithm, providing a precise asymptotic behavior.
+
+### Practical Considerations
+
+- **Focus on Large Inputs**: Asymptotic notation is primarily concerned with the behavior of functions as the input size \( n \) grows very large. Constant factors and lower-order terms are less significant in this context.
+- **Average-Case vs. Worst-Case**: While Big O notation is often used to describe the worst-case complexity, average-case complexity can also be analyzed. It's important to clarify which case is being discussed.
+- **Reducing Functions**: When simplifying expressions, constants and lower-order terms are usually omitted. For instance, \( 3n^2 + 2n \log n \) simplifies to \( O(n^2) \) because \( n^2 \) dominates \( 2n \log n \) for large \( n \).
+
+### Properties of Logarithms
+
+- **Change of Base**: Logarithms with different bases are asymptotically equivalent. For example, \( \log_b n \) and \( \log_a n \) differ only by a constant factor, \( \log_b n = \frac{\log_a n}{\log_a b} \). Hence, the base can be ignored in Big O notation.
+
+### Common Pitfalls
+
+### Common Pitfalls
+
+### Common Pitfalls
+
+- **Exponential Growth**: Do not ignore the differences in constants in front of exponents when comparing functions like \( n^{2x} \) and \( n^{3x} \). For example, \( n^{3x} \) grows faster than \( n^{2x} \) because the exponent \( 3x \) is larger than \( 2x \). This is analogous to comparing \( (n^x)^3 \) with \( (n^x)^2 \), where \( (n^x)^3 \) grows faster than \( (n^x)^2 \) as \( n \) increases.
+- **Exponent Bases**: Exponential functions with different bases grow at different rates. For example, \( 2^n \) and \( 3^n \) are not asymptotically equivalent; \( 3^n \) grows faster than \( 2^n \) due to the larger base.
+- **Logarithm Bases**: The base of a logarithm can be disregarded because logarithms of different bases differ only by a constant factor. For instance, \( \log_b n \) and \( \log_a n \) are asymptotically equivalent.
+
+
+### Additional Notes
+
+- **Polynomial vs. Exponential Growth**: Polynomial growth (e.g., \( n^2 \), \( n^3 \)) is slower compared to exponential growth (e.g., \( 2^n \), \( 3^n \)). In the context of Big O notation, exponential terms will eventually dominate polynomial terms for sufficiently large \( n \).
+- **Amortized Analysis**: Sometimes, operations may have different costs depending on the sequence of operations. Amortized analysis provides a way to average out these costs over a sequence of operations to determine the average performance.
