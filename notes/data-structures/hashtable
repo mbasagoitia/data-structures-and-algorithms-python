@@ -1,0 +1,47 @@
+# Hashtable
+
+Hashtables underly many important data structures, such as python dictionaries
+
+Implements mappings of keys to values
+
+## Hashtable operations
+
+- Find
+- Insert
+- Delete
+- Update key/value binding
+
+Key and value types do not matter
+
+## Hash function
+
+Takes in a key, efficiently computes a value, and returns a value that a specific key/value pair is "slotted" to
+
+Hash function must map a key to a slot in a table (not out of bounds of the table)
+
+Has function is not necessarily unique (consider keys "team" and "tame")
+
+## Hash collisions
+
+The hash function returns a value that maps to a slot in the table where a key already exists
+
+### Chaining
+
+An idea for handling hash collisions where each slot is associated with a list of keys that can grow dynamically, not a single key
+
+## Load Factor
+
+Assume hashtable has m slots and we insert n elements
+
+In the worst case, all elements collide onto the same slot and entire list must be searched, which means all insert, find, and delete operations cost O(n) time
+- Poorly-designed hash function?
+- Adversary chosen keys
+
+- "Average" case: 1/m probability of choosing any specific slot
+- Average list size: n/m (assuming everything is well-distributed)
+- All insert, find, and delete operations would therefore also have n/m complexity
+
+## Rehashing
+
+When a hashtable reaches capacity of 1/2m, creates a new hashtable of size 2m and copies data from old table into new table, running it through a new hashing function (this costs O(n + m) time)
+This is done to manage the distribution of elements in a hashtable so you don't end up with very long lists in each slot
