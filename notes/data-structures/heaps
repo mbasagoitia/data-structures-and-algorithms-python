@@ -1,0 +1,85 @@
+# Heaps
+
+## A heap is a specialized tree-based data structure that satisfies the heap property.
+
+- A heap is essentially a special binary tree represented by an array of numbers called keys with some "special" properties
+
+## Heap Properties
+
+- Every node has at most two children
+- If a node has a right child, it MUST also have a left child (a property not present in binary trees)
+- For every element i in a heap, its left child is represented by 2i (where 2i <= n, the length of the array) and its right child is represented by 2i + 1 (where 2i + 1 <=n)
+- For every element j in in a heap, its parent is represented by j // 2 (half the index of j rounded down)
+- The first element in a heap has no parent and is called the root
+
+- Max-Heap: In a max-heap, for any given node i, the value of i is greater than or equal to the values of its children. This means the maximum value is at the root of the heap.
+- Min-Heap: In a min-heap, for any given node i, the value of i is less than or equal to the values of its children. This means the minimum value is at the root of the heap.
+
+Heaps are typically implemented as binary heaps, where each node has at most two children.
+
+- A heap is a complete binary tree, meaning all levels of the tree are fully filled except possibly for the last level, which is filled from left to right.
+
+## Heap operations
+
+- Insertion: 
+    - Add the element at the end of the tree (maintain the complete binary tree property).
+    - Restore the heap property by "bubbling up" the element (swap it with its parent until the heap property is restored).
+
+- Deletion (Extracting Max/Min):
+    - To remove the root of the heap (the maximum in a max-heap or minimum in a min-heap):
+    - Replace the root with the last element in the tree.
+    - Remove the last element (as it has been moved to the root).
+    - Restore the heap property by "bubbling down" the root element (swap it with its largest child in a max-heap or smallest child in a min-heap until the heap property is restored).
+
+- Find min element: smallest key in heap
+
+- Heapify: Convert an unsorted array into a heap. This can be done in O(n) time complexity using a bottom-up approach, ensuring the heap property is maintained throughout.
+
+## Primitive Operations on Heaps
+
+- Bubble up: swap value with its parent element if value is in wrong relation WITH ITS CHILDREN
+- Bubble down: swap value with its smallest child element if value is in wrong relation WITH ITS PARENT
+
+Python's heapq module provides functions to work with heaps and implements a min-heap by default.
+
+## Examples of Heap Operations
+
+### Pseudo-code for bubble up
+
+    # Where A is the heap and j is the element out of place
+def bubble_up(A, j):
+    # Base case: j is already at the top of the heap
+    if j <= 1:
+        return
+    else:
+        # If the element at index j is out of place (less than its parent)
+        if A[j] < A[j // 2]:
+            swap(A[j], A[j // 2])
+            # Call bubble_up on the next parent (since our original element is now at j // 2)
+            bubble_up(A, j // 2)
+        return
+
+Worst-case time complexity: We call bubble up on a leaf node, and the number of calls is equal to the depth of the heap (O(log(n)))
+
+### Pseudo-code for bubble down
+
+def bubble_down(A, j):
+    # (no children) j has no left child (out of bounds of array length n), so it certainly has no right child
+    if A[2j] > n:
+        return
+    # Has left child but no right child
+    if A[2j] <= n and A[2j + 1] > n:
+        # If j is out of place with its left child
+        if A[j] > A[2j]:
+            swap(A[j], A[2j])
+            bubble_down(A, A[2j])
+    else:
+    # j has two children, find out which is the smallest
+        if A[2j] < A[2j + 1]
+            smallest = A[2j]
+        else:
+            smallest = A[2j + 1]
+        swap(A[j], smallest)
+        bubble_down(A, smallest)
+
+Worst-case time complexity: We call bubble down on the root of the heap and go to the depth of the heap (O(lob(n)))
