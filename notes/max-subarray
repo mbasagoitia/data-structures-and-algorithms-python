@@ -1,0 +1,30 @@
+# Maximum Subarray Problem using Divide and Conquer
+
+## Find the contiguous subarray within a one-dimensional array of numbers which has the largest sum
+## Finding maximum subarray of A[low...high]
+## O (n log(n)) time complexity (The array is divided in half at each step (logarithmic depth), and the max_crossing_sum computation at each level takes linear time)
+
+1. Calculate midpoint and divide into two subarrays of equal size
+- We can say that any contiguous subarray A[i...j] of A[low...high] must lie in 1 of 3 places:
+
+- Entirely in the left subarray A[low...mid]
+- Entirely in the right subarray A[mid + 1...high]
+- Crossing the midpoint
+
+Therefore, a maxium subarray also must lie in one of these three cases
+
+2. Find maximum TWO subarrays of A[low...mid] and A[mid + 1...high] recursively, because they are smaller instances of the original problems
+3. Find maximum subarray that crosses the midpoint A[i...j] where i < mid < j *** This is the tricky part
+4. Take a subarray with the largest sum of the three
+
+Handling subarray that crosses midpoint:
+1. Find the Maximum Sum of the Left Part Crossing the Midpoint:
+Start from the midpoint and move leftward, keeping track of the maximum sum.
+
+2. Find the Maximum Sum of the Right Part Crossing the Midpoint:
+Start from the midpoint and move rightward, keeping track of the maximum sum.
+
+3. Combine the Results:
+The combined result for the crossing subarray is the sum of the maximum sums from the left and right parts (found in the previous two steps).
+
+
