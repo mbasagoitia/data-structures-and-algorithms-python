@@ -12,6 +12,11 @@
 - For every element j in in a heap, its parent is represented by j // 2 (half the index of j rounded down)
 - The first element in a heap has no parent and is called the root
 
+### Parent/child Relationships with indices
+- Parent: (index - 1) // 2
+- Left child: (index * 2) + 1
+- Right child: (index * 2) + 2
+
 - Max-Heap: In a max-heap, for any given node i, the value of i is greater than or equal to the values of its children. This means the maximum value is at the root of the heap.
 - Min-Heap: In a min-heap, for any given node i, the value of i is less than or equal to the values of its children. This means the minimum value is at the root of the heap.
 
@@ -39,6 +44,18 @@ Heaps are typically implemented as binary heaps, where each node has at most two
 
 - Bubble up: swap value with its parent element if value is in wrong relation WITH ITS CHILDREN
 - Bubble down: swap value with its smallest child element if value is in wrong relation WITH ITS PARENT
+- Insert: New element is inserted at the end of a heap and bubbles up to its correct position. O(1) (append) * O(log(n)) (bubble up) time complexity = O(log(n))
+    1. Append element to end of heap
+    2. Bubble up(A, n + 1)
+- Delete: One swap plus one adjust size plus bubble up or bubble down = O(log(n)) time complexity
+    1. Delete element at specified index
+    2. Fill the new space with item at end of array
+    3. Fix what's broken--either bubble up if that element < its parent or bubble down if that element > one or both of its children; not both
+- Find smallest element: return A[1] IF heap is a min-heap (finding the largest element is not very efficient; better to have implemented a max heap)
+- Heapify: Given an array A, turn A into a heap
+    1. Move from n (array length) to beginning and bubble down each element
+    - Elements from n/2 + 1 ... n do not have children (they are leaf nodes, already bubbled down), but elements from A[1] to n/2 do have children that can be bubbled down
+    - Time complexity: O(n)
 
 Python's heapq module provides functions to work with heaps and implements a min-heap by default.
 
@@ -83,3 +100,18 @@ def bubble_down(A, j):
         bubble_down(A, smallest)
 
 Worst-case time complexity: We call bubble down on the root of the heap and go to the depth of the heap (O(lob(n)))
+
+### Pseudo-code for heapify
+
+for i in range(n//2 - 1, -1, -1):
+    bubble_down(A, i)
+
+## Applications of Heaps
+
+- Priority Queue (used in many places!!!)
+
+A queue is a FIFO data structure
+
+In a priority queue, some operations in the queue may have different priority levels, which you want to process in order of priority
+
+Priority queues are often implemented as heaps
