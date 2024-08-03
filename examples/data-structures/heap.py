@@ -22,59 +22,84 @@
 
 class Heap:
 
-    length = 0
+    heapified = False
 
     def __init__(self, arr):
         self.arr = arr
-        self.length = len(arr)
 
     def insert(self, val):
         self.arr.append(val)
-        self.length += 1
-        self.bubble_up(self.arr, self.arr[len(self.arr) - 1])
+        self.bubble_up(self.arr, len(self.arr) - 1)
 
     def delete(self, idx):
-        self.arr.pop(idx)
-        self.length -= 1
-        self.arr[idx] = self.arr.pop()
-        self.bubble_down(self.arr, idx)
+        if len(self.arr) > 1:
+            # Replace the element to be deleted with the last element
+            self.arr[idx] = self.arr.pop()
+            # Restore the heap property by bubbling down the replaced element
+            self.bubble_down(self.arr, idx, len(self.arr) - 1)
+        else:
+            # If only one element was in the heap, just remove it
+            self.arr.pop()
 
     def heapify(self):
-        for i in range(len(self.arr) - 1, -1, -1):
-            # Potential issue here
-            self.bubble_down(self, i)
+        for i in range((len(self.arr) // 2) - 1, -1, -1):
+            self.bubble_down(self.arr, i, len(self.arr) - 1)
+        self.heapified = True
 
     def get_min(self):
-        print(self.arr[0])
+        if self.heapified:
+            print(self.arr[0])
+        else:
+            self.heapify()
+            print(self.arr[0])
 
-    def bubble_up(self, idx):
+    def bubble_up(self, heap, idx):
         if idx <= 0:
             return
         parent_idx = (idx - 1) // 2
-        if self.arr[idx] < self.arr[parent_idx]:
-            self.arr[parent_idx], self.arr[idx] = self.arr[idx], self.arr[parent_idx]
-            self.bubble_up(self, parent_idx)
+        if heap[idx] < heap[parent_idx]:
+            heap[parent_idx], heap[idx] = heap[idx], heap[parent_idx]
+            self.bubble_up(heap, parent_idx)
             return
 
-    def bubble_down(self, idx):
+    def bubble_down(self, heap, idx, end):
         left_child_idx = idx * 2 + 1
         right_child_idx = idx * 2 + 2
-        if left_child_idx >= self.length:
+        # If no left child, there is no right child
+        if left_child_idx > end:
             return
-        if left_child_idx < self.length and right_child_idx >= self.length:
-            self.arr[idx], self.arr[left_child_idx] = self.arr[left_child_idx], self.arr[idx]
-            self.bubble_down(self, left_child_idx)
-        else:
-            if self.arr[left_child_idx] < self.arr[right_child_idx]:
-                smallest = left_child_idx
-            else:
-                smallest = right_child_idx
-            self.arr[idx], self.arr[smallest] = self.arr[smallest], self.arr[idx]
-            self.bubble_down(self, smallest)
+        # If the left child is present but the right is not
+        if left_child_idx <= end and right_child_idx > end:
+            # If the node is in the incorrect place relative to its left child
+            if heap[idx] > heap[left_child_idx]:
+                heap[idx], heap[left_child_idx] = heap[left_child_idx], heap[idx]
+                self.bubble_down(heap, left_child_idx, end)
+        # If both children are present
+        elif left_child_idx <= end and right_child_idx <= end:
+            # If the node is in the incorrect place relative to either child
+            if heap[idx] > heap[left_child_idx] or heap[idx] > heap[right_child_idx]:
+                if heap[left_child_idx] < heap[right_child_idx]:
+                    smallest = left_child_idx
+                else:
+                    smallest = right_child_idx
+                heap[idx], heap[smallest] = heap[smallest], heap[idx]
+                self.bubble_down(heap, smallest, end)
 
-my_heap = Heap([9, 1, 4, 1, 2, 123, 12, 53])
+    def heapsort(self):
+        self.heapify()
+        end = len(self.arr) - 1
+        while end > 0:
+            # Swap the root (minimum element) with the last element in the current heap
+            self.arr[0], self.arr[end] = self.arr[end], self.arr[0]
+            # Reduce the size of the heap by one
+            end -= 1
+            # Bubble down the new root element to restore the heap property
+            self.bubble_down(self.arr, 0, end)
 
-print(my_heap.arr)
+
+
+my_heap = Heap([1, 3, 2, 4])
 my_heap.heapify()
-my_heap.get_min()
-print(my_heap.arr)
+print("heapified", my_heap.arr)
+my_heap.heapsort()
+print("sorted", my_heap.arr)
