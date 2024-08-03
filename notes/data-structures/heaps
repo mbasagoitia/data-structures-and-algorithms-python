@@ -54,7 +54,7 @@ Heaps are typically implemented as binary heaps, where each node has at most two
 - Find smallest element: return A[1] IF heap is a min-heap (finding the largest element is not very efficient; better to have implemented a max heap)
 - Heapify: Given an array A, turn A into a heap
     1. Move from n (array length) to beginning and bubble down each element
-    - Elements from n/2 + 1 ... n do not have children (they are leaf nodes, already bubbled down), but elements from A[1] to n/2 do have children that can be bubbled down
+    - Elements from n/2 + 1 ... n do not have children (they are leaf nodes, already bubbled down), but elements from A[1] to n/2 do have children and can be bubbled down
     - Time complexity: O(n)
 
 Python's heapq module provides functions to work with heaps and implements a min-heap by default.
@@ -99,10 +99,12 @@ def bubble_down(A, j):
         swap(A[j], smallest)
         bubble_down(A, smallest)
 
-Worst-case time complexity: We call bubble down on the root of the heap and go to the depth of the heap (O(lob(n)))
+Worst-case time complexity: We call bubble down on the root of the heap and go to the depth of the heap (O(log(n)))
 
 ### Pseudo-code for heapify
 
+#starting from the end of the heap and moving to the beginning, bubble down each element that is not a leaf node
+#notice the adjustment in 0-indexed array vs the notation we were using above
 for i in range(n//2 - 1, -1, -1):
     bubble_down(A, i)
 
