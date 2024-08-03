@@ -1,0 +1,44 @@
+# Randomization in Data Structures and Algorithms
+
+## Why Randomness?
+
+- Worst-case analysis focuses on the worst possible input
+- We don't always expect that kind of input, so we focus on average-case complexity (inputs coming from a truly random source)
+- Some algorithms have a substantial difference between their worst-case and average-case complexities (quick sort)
+- If your algorithm itself generates randomness, it has different ways of computing the output, some of which may be short and some of which may be very long. Each input has some probability of generating a certain output (randomness not input-specific)
+
+## Average Case Complexity Analysis
+
+- T(p): Uknown average running time
+- To get the average running time, multiply each possible cost by its chance of occurring, then add the results together
+
+## Randomness in Data Structures
+
+- We want randomness in data structures to effectively store and organize data regardless of inputs, and so that average case cost of operations is always good
+
+## Analysis of Algorithms: Recurrence Relations
+
+- T(n) = a * T(n/b) + f(n)
+
+Where
+- T(n) = running time
+- a = the number of recursive calls
+- n = the size of the original input
+- b equals the size of the input for each recursive call
+- f(n) is the extra work done in each processing step
+- Often T(n) is constant for the base case
+
+Ex. Merge sort has a recurrence relation of T(n) = 2 * T(n/2) + theta(n) if n > 1 (2 recursive calls and input size halves each call)
+and T(n) = 1 if n <= 1 (base case)
+
+## Introduction to Master Method
+
+As before, T(n) = a * T(n/b) + f(n)
+
+- Compute e = log base b (a)
+
+1. n^e asymptotically dominates f(n): T(n) = theta (n^e)
+2. n^e is asymptotically the same as f(n): T(n) = theta(n^e*log(n))
+3. f(n) asymptotically dominates n^e + some extra conditions: T(n) = theta(f(n))
+
+
