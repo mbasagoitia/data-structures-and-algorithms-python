@@ -1,0 +1,14 @@
+# Design of Partition Schemes
+
+## Lomuto Partitioning Scheme (O(n) time complexity)
+
+- Array divided into 3 regions plus pivot: A[0] - A[i]; A[i + 1] - A[j - 1]; A[j] - A[n - 1]; pivot
+- Pivot is last element of array
+- The 3 regions represent elements less than the pivot, greater than the pivot, and yet to be processed elements, respectively
+
+- Our two pointers, i and j, start at the beginning (arr[start]) and one index before the beginning (A[start - 1]), respectively
+- j loops from the beginning of the array to the end (exclusive because that's the pivot)
+- If arr[j] is less than the pivot, i increments and swaps with arr[j] so that all elements "behind" i are smaller than the pivot
+- When j breaks out of the loop just before the pivot, i is currently pointing to the last element that is smaller than the pivot. We then swap arr[i + 1] (also the first element of region 2) with the pivot (arr[end]) to correctly place the pivot where it belongs, and return its index (now i + 1) to get the pivot index
+
+- In other words, j scans the unprocessed region and i keeps track of the elements strictly less than the pivot

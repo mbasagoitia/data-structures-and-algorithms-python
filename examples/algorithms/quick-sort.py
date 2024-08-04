@@ -33,6 +33,7 @@ def quick_sort(arr, start=0, end=None):
     if end is None:
         end = len(arr) - 1
 
+    # If subarray length is greater than 1
     if start < end:
         # Partition the array and get the pivot index
         pivot_index = partition(arr, start, end)
@@ -52,6 +53,32 @@ def partition(arr, start, end):
             arr[i], arr[j] = arr[j], arr[i]
 
     # Swap arr[i+1] and arr[end] (the pivot)
+    arr[i + 1], arr[end] = arr[end], arr[i + 1]
+    return i + 1
+
+
+# Without comments
+
+def quick_sort(arr, start=0, end=None):
+    if end is None:
+        end = len(arr) - 1
+
+    if start < end:
+        pivot_index = partition(arr, start, end)
+
+        quick_sort(arr, start, pivot_index - 1)
+        quick_sort(arr, pivot_index + 1, end)
+
+def partition(arr, start, end):
+    pivot = arr[end]
+
+    i = start - 1
+
+    for j in range(start, end):
+        if arr[j] < pivot:
+            i += 1
+            arr[i], arr[j] = arr[j], arr[i]
+
     arr[i + 1], arr[end] = arr[end], arr[i + 1]
     return i + 1
 
