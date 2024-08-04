@@ -1,0 +1,13 @@
+# Analysis of Quick Sort
+
+- Quick sort takes an array, selects a pivot element, rearranges the array and recursively sorts each half of the array
+
+- Ideally, the partition is balanced (pivot is approximately in the middle and have two equal halves)
+    - However, this is quite rare
+
+- In the worst case, the pivot is the largest (or smallest) element and the partition is unbalanced
+    - If this happens repeatedly, the array length to process in each subsequent step is only one less than the previous step (instead of approximately half), which gives us O(n^2) time complexity
+
+- Choosing a pivot element randomly vs deterministically (always first element or last element, for example) gives us better performance and expected complexity of O(n * log(n))
+
+Average case: T(n) = theta n(log(n)) IF YOU CHOOSE PIVOTS RANDOMLY
