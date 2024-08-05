@@ -1,0 +1,51 @@
+# Open Address Hashing
+
+This contrasts with chaining-based hashing, which we have already discussed
+
+## Why do we need another solution?
+
+Lists are very memory-intensive and intensive data structures. When using chaining, some lists can grow very large, and some will be empty--you are wasting a lot of space. Open address hashing addresses this issue.
+
+- Each slot in the hash table has a single key and a single value, NOT a list.
+
+## How do we resolve collisions?
+
+Idea: If the original slot is occupied, place things in an "alternative" location
+
+Probe a previously-fixed sequence of alternative locations (probe sequence). If all of those locations are full, double the size of the hash table and re-hash.
+
+## Lookup and Insertion
+
+When trying to find a key, we hash the key and look where the hash function pointed to. If something other than the key is there, we must look at the sequence of alternative locations to find it. If any of the alternative places are empty, we can conclude that key doesn't exist in the hash table. Continue until you either reach the key or an empty slot.
+
+- Linear probing: The probing may be a sequence of linear progressions (j, j + 1, j + 2.... or j, j + a, j + 2a, etc.) (all % m to stay within bounds of the table)
+    - Clustering problem: Your table may fill up in a "patchy" manner where there are large, contiguous clusters of data. To avoid this, we may use quadratic probing or double hashing which provides more randomness and spreads values more evenly.
+
+- Quadratic probing: The probing sequence may be a sequence of quadratic progressions such as j, j^2, j^2 + a, etc. (all % m)
+
+- Double hashing: Have two hashing functions: one that tells you the first place to look, and a second that gives you the stride of the stride of the arithmetic progression of your probing sequence (so probing sequence becomes hash1(key) + hash2(key), hash1(key) + 2hash2(key), etc.)
+
+## Deletion
+
+A problem arises with deletion when we "break" the probing sequence by deleting elements from it. Those slots are now empty, and the lookup and insertion methods immediately conclude that a key doesn't exist if it encounters an empty slot. 
+
+To fix this, we put a deletion marker in a slot after a key has been removed from it so that it doesn't "break" the probing sequence.
+
+## Open Address Hashing vs Chaining
+
+Chaining:
+- Never fills up; linked lists simply expand
+- Wasted space in hash table
+- Extra overhead of maintaining dynamic array/linked list
+
+Open address:
+- Needs rehashing
+- Better space utilization
+- Clustering problem
+- "Cache locality:" 
+
+    - Contiguous Memory Access: Linear probing stores entries in adjacent slots within the hash table. This means that when searching for an entry (whether for insertion, deletion, or lookup), the memory access pattern involves scanning consecutive slots in memory. Modern CPU caches are designed to take advantage of such patterns by fetching cache lines (typically containing multiple consecutive bytes) at a time. Thus, when a particular entry is accessed, nearby entries are likely already loaded into the cache, speeding up subsequent accesses.
+
+
+
+
