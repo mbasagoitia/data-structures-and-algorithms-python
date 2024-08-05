@@ -1,0 +1,43 @@
+# Selecting Hash Functions
+
+## What Makes a Good Hash Function?
+
+- Upon inserting any sequence of keys, a good hash function distributes these sequences across the table so that you have a good distribution and few collisions
+
+Many languages and their runtimes implement their own hash functions for you
+
+## Cryptographic hash functions
+
+Complicated functions with small changes in input leading to large changes in the result of the hash, produces a hash code
+
+## Designing Hash Functions
+
+- Need to hash various types of keys beyond numbers
+    - Lists/arrays
+    - Tuples
+    - Strings
+    - Other user-defined objects
+
+- Need to ensure that the hash function does not cause too many collisions
+    - Add an element of randomness
+
+- You can use cryptographic hash functions, but they sometimes tend to be overkill
+
+## Hashing a List of Numbers
+
+- Idea: add of the values of the list and take the modulo of the size of the list m (this will cause many collisions!)
+
+Problems:
+- Suppose keys are different permutations of the same list
+- Suppose keys are obtained by adding/subtracting one from elements
+
+- Better idea: Convert data to a number, or a sequence of 32/64 bit words
+    - Choose a large prime number p (not a multiple of m) and multiply each subsequent word by p^0, p^1, p^2, etc., add them all up, and take modulo m. This takes into account the position of the word in the sequence of bits.
+
+## Problems with Fixed (Known) Hash Functions
+
+If someone has knowledge of the hash function, they can find keys that will always collide to the same slot
+
+## Universal Hash Function
+
+Rather than fix a hash function, randomly choose a hash function from a family (large sets of hash functions) each time a new hashtable is instantiated
