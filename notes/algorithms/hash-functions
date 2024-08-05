@@ -38,6 +38,20 @@ Problems:
 
 If someone has knowledge of the hash function, they can find keys that will always collide to the same slot
 
-## Universal Hash Function
+## Universal Hash Functions
 
 Rather than fix a hash function, randomly choose a hash function from a family (large sets of hash functions) each time a new hashtable is instantiated
+
+The complexity will depend upon the size of the linked list found at each index in the hash table
+
+- For insert, delete, and find operations, the worst-case time complexity is O(n) (because all values could collide into the same ilnked list, and the entire list must be searched)
+
+- Do not assume anything about the input, rather, focus on the hash function -- secretly choose a hash function from a family of hash functions, but do not tell the users which ones you are choosing
+
+- Assuming m is the number of slots in the hashtable, and n is the number of elements being inserted, n/m represents the load factor.
+    - Ideally, the load factor should be 1 or smaller
+
+- Universal Property: Given any two (distinct) keys, the probability that they collide in a hashtable must be <= 1/m
+    - A near-universal hash function (about 2/m), the average size of each list is 2 alpha (2 times the load factor); with true universal (1/m), the average size is simply alpha
+
+- If hash functions are chosen well, the average-case complexity of insert, delete, and find methods are equal to the load factor (using a universal hash function)
