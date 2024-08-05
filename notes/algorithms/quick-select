@@ -1,0 +1,32 @@
+# Quick Select
+
+## Given an array of n elements, find the kth smallest element
+## Uses quick sort to find this element
+## O(n) time complexity (expected) O(n^2) (worst case)
+
+Useful when you need to find a single order statistic (like the median) without fully sorting the array.
+
+- Smallest: k = 1 (first smallest)
+- Largest: k = n (nth smallest)
+- Median: k = n/2
+- 90th percentile: k = 9n/10
+
+We use an algorithm called quick select to solve this problem.
+
+1. Choose a pivot and partition the array
+2. Our pivot element, placed at position j, is the "jth smallest element" (because every element smaller than it is to its left, and every element larger is to its right)
+    - If j = k, return arr[j]
+    - If j > k, the kth smallest element is in the first half of the array, quickselect(arr[0], arr[j - 1]) to find kth smallest
+    - If j < k, the kth smallest element is in the second half of the array, quickselect(arr[j + 1], arr[n]), no need to check j because it is already accounted for, to find (k-j)th smallest
+
+## Analysis of Randomized Quick Select
+
+As with quicksort, we want to choose the pivot randomly vs deterministically (not always first or last element)
+
+For this example, k = n/2 (we are finding the median)
+
+- When x is chosen randomly, leftover array is n-1 with probability 1/n, or n-2 with same probability, up to n/2 - 1
+
+T(n) = 1/n(T(n-1) T(n/2) + 1 + .... T(n-1)) + C(n)
+Written as T(n) = summation of j = n/2 + 1 to n-1 + T(j) + Cn
+T(n) = O(n)
