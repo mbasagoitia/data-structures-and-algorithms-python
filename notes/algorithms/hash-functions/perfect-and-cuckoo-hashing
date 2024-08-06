@@ -1,0 +1,61 @@
+# Perfect Hashing and Cuckoo Hashing
+
+## Perfect Hashing
+
+Constraints: All keys must be known up-front.
+You cannot insert/delete new keys
+More complex data structure: hash table whose slots are themselves hashtables
+
+Given a known set of distinct keys n, finding a hash function where no collisions are possible
+
+### One Approach
+
+Basic idea: have a VERY large number of slots in your table (Kn^2) so that collisions are very improbable
+
+1. Choose a random hash function h from a family of hash functions H
+2. Hash table with Kn^2 slots, where K is TBD
+3. Insert each key into hash table
+4. If collision occurs, abort and redo procedure
+
+The probability that two keys will collide is Kn^2
+The probability that at least one collision occurs is less than or equal to c/2k, so
+K = 2c (if c = 1, K = 2), so
+The probability of at least one collision is <= 1/4. Expected number of geometric trials for success is 4/3, so we WILL NOT get stuck in an infinite loop because of the low probability of collisions
+
+HOWEVER, building a hash table of Kn^2 slots up front is quite wasteful.
+
+### Alternative Approach - Two-level hashtable
+
+Basic idea: Take things that collide at one specific slot j and put them into their own dedicated perfect hashtable.
+
+Build a hashtable of size n and hash the keys, run a mock, and see how many collisions happen in slot j. Instead of chaining, create a second-level table with a second hash function and Knj^2 slots (big hash table, but not as big as before), but only for the ones that colllide on each slot.
+
+Total size of second-level hashtables and parent table is <= some constant C * n, even though secondary hashtable size is quadratic to j.
+
+
+## Cuckoo Hashing
+
+Insertion, deletion, and lookups are possible
+
+Lookup and deletion is guaranteed to be constant time O(1)
+Insertion is constant on average, but could be longer
+
+No chaining, no open addressing necessary
+
+Alternative to chaining and open address hashing
+- In the case of chaining, even if the average length is small, there may be large outliers
+- We can expect the largest chain to be as large as O((log(n)/log(log(n)))), assuming load factor is less than half and n is number of keys inserted into hash table. While this number is very small, it is not a constant.
+
+Basic idea: Use two hashtables and two randomly-chosen hash functions. Every key k can either be found in h1(k) (first hashtable) or h2(k) (second hashtable), otherwise it is not present.
+
+If the designated slot in h1 is full, and so is h2, then our key "kicks" the element in h2 out of its spot and replaces it. Now, that "kicked out" element will collide again if we try to insert it in the second table, so we try to insert it in the first. If something is already there, we then displace that element and insert it into the second hashtable.
+
+This process creates a displacement chain, where each displaced element is inserted into the other hashtable. The moment you find an empty slot, the displacement chain ends.
+
+### Two potential problems
+
+- Displacement chain becomes too long (>= log(n))
+    - In this case, build a new cuckoo hashtable and re-insert all keys, possibly with larger size, and definitely choose two different random hash functions. The probability of this happening is very small, about 1/n.
+- Cyclic displacement chain (infinite loop displacing same elements over and over)
+
+So, expected complexity of all operations is still constant O(1)

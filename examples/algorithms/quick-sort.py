@@ -59,9 +59,7 @@ def partition(arr, start, end):
 
 # Without comments
 
-def quick_sort(arr, start=0, end=None):
-    if end is None:
-        end = len(arr) - 1
+def quick_sort(arr, start, end):
 
     if start < end:
         pivot_index = partition(arr, start, end)
@@ -81,6 +79,3 @@ def partition(arr, start, end):
 
     arr[i + 1], arr[end] = arr[end], arr[i + 1]
     return i + 1
-
-
-
