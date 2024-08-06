@@ -1,0 +1,48 @@
+# Bloom Filters
+
+- A bloom filter is a fast set data structure based on hashing
+- Remember, a set stores unique values
+- You can use Bloom Filters to check membership of an element... is x in the set?
+
+Supports insert and check operations
+
+- Approximate in nature; false positives possible
+
+True -> may belong to set, but not guaranteed
+False -> definitely does not belong to the set
+
+Basic idea:
+
+- You have k randomly chosen hash functions h
+- The data structure itself is a bit string with m bits (1 or 0)
+
+Insert element x: Set the bits h1(x), h2(x) ... hk(x) by computing a value of x with each hash function, giving you k different bit positions and setting them to 1. This is said to be that element's signature.
+
+To check membership of element x, we ask if the bits h1(x), h2(x) ... hk(x) are all set to 1.
+
+- Constant time insertion (O(K), the time it takes to calculate your k hash functions) and membership check
+
+Membership query may return true even if the element was not inserted -- other members may have set those bits to true.
+
+## Probability of false positive
+
+In a table of k slots, with k hash functions called on n elements, the probability that any position is not set to 1 is (1 - (1/m)) ^kn, or e^-kn/m where m is the total number of bits in the hashtable
+
+The probability that any given slot was set to 1 is (1-e^-kn/m), and the probability that ALL of the bits you're interested in are set to 1 is **(1-e^-kn/m)^k**, which is the probability of a false positive.
+
+Example:
+
+- n = 5,000 strings inserted into table
+- m = 25,000 bit vector size (5 bits per element)
+- k = 3 hash functions
+
+Probability of false positive is about 0.09 or 9%
+
+As m increases, the probability of a false positive decreases
+
+## Applications of Bloom Filters
+
+- Web content delivery and caching
+    - Bloom filters help determine frequent requests to keep in the cache
+    - Tells you if you have seen that same request frequently -- if so, keep it in cache, if not, eliminate it from cache to make space for something else
+    - In this situation, the false positives are "okay" as you can reset the bloom filter and cache every now and then
