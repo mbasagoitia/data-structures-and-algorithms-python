@@ -1,0 +1,71 @@
+# Count-Min Sketching Using Hashing
+
+## Basic Idea
+
+Count-min Sketches are data structures that take in a stream of data and keeps track of the count of each piece of data. When querying for the count of each piece of data, the count is guaranteed to be approximate, but not exact. This guarantees better space complexity than storing each piece of data and its exact count.
+
+This idea is similar to Bloom Filters, but instead of returning whether an item exists or not (boolean), we are also keeping track of the count.
+
+- Use m counters C(1) ... C(m) and draw a random hash function and hash each item that comes in the stream. We choose m later.
+- This function points us to a counter, which we increment
+- When querying for approxCount(k), we pass it through the hash function and read the count of the counter it points to
+- Because of hash collisions, many items can map to the same counter. This is the tradeoff of using this data structure.
+
+## Example
+
+Say you are keeping track of a very large number of URLs being requested, represented by w, of U unique URLs. You have N distinct counters keeping track of each unique piece of data. Each time a specific URL is requested, increase its corresponding counter. Requests can repeat, and some URLs are requested very few times and some are requested many times. We do not know N (the number of counters/unique requests) in advance.
+
+- N is huge and not known in advance
+- Advantage: Approximate count within say 10% of the answer may be acceptable
+
+## Approximate Counting Data Structure
+
+- Stream of data x(1), x(2) ... x(w) (we may know the approximate size of w, such as number of website requests per day)
+- Each element of the stream is x(1) ... x(N), but we don't know N (unique requests) in advance
+- Return approxCount(j): return epsilon * w of actual count, with probability at least delta
+- Epsilon: Margin of error
+- Delta: Probability that the count is within 1,000 of the true count
+
+### Typical Numbers
+
+- N = 10^8 (not known in advance, but some number less than w), w = 10^9, epsilon = 10^-6, delta = 0.99
+
+## Error Analysis
+
+- For any item j, approxCount(j) >= count(j) because of hash collisions
+- Your universal (or near-universal) hash function must have a probability of two distinct keys collidiing no more than c/m (typically 2/m or 1/m)
+- Expected value of approximate count of j: count(j) + (sum of every other element i in the table which may increment the same counter times the probability a collision occurs * count(i))
+- count(j) + (c/m * summation of i ... N * count(i)). This summation is just the total number of items in the stream, so we can simplify this to:
+- count(j) + c/m * W
+- So, epsilon (margin of error) is (approxCount(j) - count(j)) <= c/m * W
+
+### How Do We Choose M?
+
+- Probability that error(j) >= epsilon*W <= cW/m*epsilonW (Markov's inequality)
+- By simplification, m = ec/epsilon
+    - Where e = the constant value e
+    - c = the number coming from our universal hash function
+    - epsilon = the error fraction we calculated earlier
+- m <= 1/e <- not good enough
+
+## Reducing Error Probability
+
+Instead of running a single bank of counters, run k banks of counters in parallel each with m counters with their own randomnly-chosen hash functions.
+
+When querying for approximate count, search each bank and return the smallest count returned from each counter
+
+This method reduces the error probability exponentially because only one counter from k needs to be within epsilon(W)
+
+- The probability that they are all wrong: (1/e)^k, so as k increases, the probability for error drops exponentially
+
+## Overall Algorithm
+
+- Initialize k counter-banks with hash functions h(1)...h(k)
+- Stream item x(j)
+    - Increment each counter within each counter bank using each separate hash function
+- Query count of k 
+    - approxCount(k) = min(C1(h(k)), C2(h(k)), ... Ck(h(k)))
+    - We find the minimum value across all of the counters and return it
+
+In our examples, K represents the number of banks and m represents the number of counters in each bank. We can calculate these values with the above equations by first asserting what our acceptable margin of error is (epsilon) and how often we want that to be the case (delta), such as epsilon = 10^6 (error of up to 1,000) and delta = 0.9 (90% of the time)
+
