@@ -1,0 +1,28 @@
+# Red-Black trees
+
+- One main problem of binary search trees is that most operations on a BST depend on the height of the tree, which in turn depend on the order in which the keys were inserted.
+- In the worst case, the height of the tree is n, and in the best case is log(n) -- this is a huge difference!
+
+- So, we want to implement self-balancing trees to keep our trees balanced
+    - There are several types of data structures we can use to do this (red-black trees, AVL trees, skip lists, treaps, 2-3 trees, splay trees, B-trees)
+
+## Properties of Red-Black Trees
+
+- Every node is either red or black, a propery in addition to its key
+
+1. Root and leaves (nil nodes) are black
+2. Every red node must have two black children nodes
+3. The number of black nodes on any path from any node to a leaf must be the same (black height)
+
+Therefore, for any red-black tree with n nodes, the height h of the tree must satisfy the following:
+
+log base 2(n) <= h <= 2(log base 2(n))
+
+- At least half the nodes on the longest path must be black
+
+For any tree with black height (bh), the number of nodes in the tree is >= 2^bh - 1 AND bh >= h/2
+And by simplifying, h <= 2log base 2(n + 1)
+
+In the best case, every node in the tree is black (perfectly balanced)
+
+In a red-black tree, the height is somewhere between log(n) and 2(log(n+1)), which simplifies to O(log(n))
