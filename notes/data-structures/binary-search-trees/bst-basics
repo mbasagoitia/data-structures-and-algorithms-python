@@ -1,0 +1,38 @@
+# Binary Search Trees
+
+Very important data structure that many algorithms are built on top of
+
+Collection that stores a set (unique values) of objects and supports the following operations:
+
+- Insert
+- Delete
+- Find element
+- Traversals - map, iter, etc.
+
+Each element has a key which is a number; this provides a way of comparing elements
+
+Binary search trees can be used to build data structures such as sets and dictionaries/maps
+
+## Structure
+
+Contains a series of nodes
+
+- Every node except for leaf nodes has two children. These are known as internal nodes.
+- Every leaf node has no children
+- Every internal node contains an element, and leaves do not (null)
+- The Binary Search Tree (BST) property is that for any element e, e.key must be greater than or equal to its left child's key and less than or equal to its right child's key.
+    - Likewise, every node in the left subtree of any given node must be less than or equal to that node, and every node in the right subtree must be greater than or equal to that node.
+
+
+- To find the minimum value of a BST, we keep stepping to the left subtree of each node until we reach a node whose left child is nil. Likewise, to find max element, traverse right subtrees until you find a node whose right child is nil.
+
+## Height
+
+- Height: the height of a node is the length of the longest path from a node to a leaf node. A leaf has height 0.
+- Height(n) of a node n = max(height(n.left), height (n.right)) + 1
+- The height of the tree is defined as the height of the root node
+
+- In a tree of n nodes,
+    - The worst-case height can be when the tree is completely unbalanced (every node has a single child) and looks like a linked list; height is n
+    - The best case height is a perfectly balanced tree, and every node has two internal nodes (except for the last row, which points to nil); height is log base 2(n + 1)
+    - Most trees are somewhere in the middle; these two extremes have a HUGE difference!
