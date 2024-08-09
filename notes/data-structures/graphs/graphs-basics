@@ -1,0 +1,36 @@
+# Graphs
+
+Graphs model a binary relation over a finite set; elements/nodes are represented as vertices of the set, which are connected by edges
+
+## Directed and undirected graphs
+
+- In a directed graph, the edges between nodes have a direction
+- In an undirected graph, edges are considered directionless/bidirectional; symmetric relation
+
+## Applications
+
+- Computer networks are represented by graphs; servers/communications relate to nodes/edges
+- Social networks
+- Ecological networks
+- Electrical circuits; junctions/wires
+- Programs; variables/data dependencies
+- Google Maps; addresses/roads
+
+## Problems we solve with graphs
+
+- Traversal problems
+- Ranking nodes
+- Identifying cycles
+- Finding shortest paths
+- Finding spanning trees
+- Flows
+
+## How do we represent graphs on a computer?
+
+1. Adjacency Matrix Representation: Graph is defined by a matrix where vertices form the rows and columns. If there is an edge between two vertices, we place a 1 at (i, j) where Ni and Nj are the two nodes. If not, a 0 is placed. We end of with a matrix of 0s and 1s (read as from row to column).
+
+Sparsity: While graphs can have up to k(k-1) edges, mostly, they have far fewer. So, adjacency matrices end up storing LOTS of 0s!
+
+2. Adjacency List Representation: Every node points to a list of its neighbors/adjacent nodes connected by an edge. In many cases, this is much smaller than the adjacency matrix representation.
+
+There are other representations, such as incidence matrix representation, which we will not go over here.

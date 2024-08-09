@@ -1,0 +1,92 @@
+# Graph Traversals
+
+A graph traversal is an operation that starts from some point and visits nodes in some order, traversing only along edges.
+
+- Each node can only be visted once, and some nodes may not be visited at all.
+- Every node that you visit must be along an edge starting from an already-visited node.
+
+## Breadth-First-Search: BFS
+
+Uses a **queue** (FIFO data structure) to visit every node of the graph; record (dequeue) a node, enqueue its successors/adjacent nodes if they haven't been enqueued/discovered already, and continue.
+
+Data to store in each node:
+- pi: parent node (along which edge did I visit this node?)
+- d: depth of the node (root has depth 0)
+- visited: true/false
+
+The queue defines the behavior of breadth-first search.
+
+### Pseudo-code for BFS
+
+    # Where u is the current node
+def BFS(graph, u):
+    # Declare a new queue
+    q = new queue(u)
+    # Starting node's depth is 0 (root)
+    u.d = 0
+    # Mark the node as visited
+    u.visited = true
+    # The root's parent is null
+    u.pi = null
+
+    # While there are still items in the queue,
+    while(q):
+        # Read/process the data in the head of the queue
+        dequeue(u)
+        # For all adjacent nodes v (an edge exists between them) of the current node u,
+        for v in u:
+            if !v.visited:
+                v.depth = u.depth + 1
+                v.pi = u
+                v.visited = true
+                enqueue(v)
+
+BFS is also known as the "shortest path" algorithm because it allows you to find the shortest path between two nodes.
+
+## Depth-First Search: DFS
+
+DFS recursively visits successors of each node, backtracks, and continues.
+
+Data to store in each node:
+- pi: parent node
+- d: discovery time
+- f: finish time    
+- visited: true/false
+
+### Pseudo-code for DFS
+
+def DFS(graph, u):
+    if u.visited:
+        return
+    time = time + 1
+    u.d = time
+    for v in u:
+        if !v.visited
+            v.pi = u
+            DFS(graph, v)
+            v.visited = true
+    time = time + 1
+    u.f = time
+
+When BFS and DFS are finished running, they create a tree.
+
+In some cases, not all elements are connected with the rest of the graph and a tree does not result from calling DFS or BFS. Instead, we get a "forest," or collection of trees.
+
+What do we do when there are unconnected "islands" or nodes in a graph not reachable by the other nodes?
+
+- Run an outer loop from i to n that calls dfs on every node, which will account for all nodes
+
+### DFS Edge Classifications
+
+- Tree edges: edges that are in the tree after running DFS
+- Back edges: edges from a descendant to an ancestor
+- Forward edges: edges from an ancestor to a descendant that is not a child; if it were a child, it would be a tree edge
+- Cross edges: edges going between different trees in the forest or between nodes within the same tree that are neither descendants nor ancestors
+
+We can determine the types of edges by analyzing their discovery/finish times.
+
+This information can help us determine if a graph has a cycle.
+
+### Cycles
+
+A graph has a cycle if and only if DFS produces a back edge
