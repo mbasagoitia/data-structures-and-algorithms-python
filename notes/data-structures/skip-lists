@@ -1,0 +1,51 @@
+# Skip Lists
+
+Randomized data structures that serve as an alternative to balanced binary search trees
+
+Supports the following operations:
+- Insert(key, value)
+- Search
+- Delete
+- Iterate
+
+Because it is randomized, it provides probabilistic guarantees and is an elegant approach to data structure designs
+
+Basic Idea: Subway station analogy
+
+- Express trains will skip smaller stations
+- Local train will visit all stations
+
+- Take express to nearest station
+- Take local train the remainder of the way
+
+## Structure
+
+- All elements of the data structure at the bottom level, bounded by infinity at each edge
+- In the next layer up is a subset of the elements
+- As you go up through the levels, each subsequent level is a subset of the level below it
+- Right pointers between "express" trains at each level (next highest element in the current level), and some elements have down pointers to the same element at the next level below
+- Each layer is sorted
+
+## Find
+
+To reach a specific element, start traversing from the top layer at the far left (infinity) and travel down and right until you find the target, backtracking if necessary
+
+## Insert
+
+Try to find the element; if it doesn't exist, you have found the spot where it should have been. Insert node at that spot, then probabilistically (50%; coin toss analogy) determine if the element should be inserted at higher layers. Because of probability, very few elements will be found at the topmost layer (probability stacks as you move higher). Remember to add down pointers to element in layer below.
+
+Average height for each node in the skip list: 2
+This is because probability of each new level is 1/2, summation is 1/(1-p), which is 1/(1/2) which = 2
+
+Probability that at least one node exceeds height h is n * p^h
+
+Probability that the height of the skip list exceeds C log(n) (which is the average height of a balanced BST)
+is 1/(n^c-1), which is very low! This probability decreases with an increase in n, the size of the list.
+
+We can say this is comparable to binary search trees
+
+## Time complexity for find
+
+4log(h) = 4C(log(n)) = log(n)
+
+You can find min/max in constant time
