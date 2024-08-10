@@ -56,17 +56,20 @@ Data to store in each node:
 ### Pseudo-code for DFS
 
 def DFS(graph, u):
-    if u.visited:
-        return
+    global time
+    
+    u.visited = True
     time = time + 1
     u.d = time
-    for v in u:
-        if !v.visited
+    
+    for v in u.neighbors:
+        if not v.visited:
             v.pi = u
             DFS(graph, v)
-            v.visited = true
+    
     time = time + 1
     u.f = time
+
 
 When BFS and DFS are finished running, they create a tree.
 
@@ -89,4 +92,29 @@ This information can help us determine if a graph has a cycle.
 
 ### Cycles
 
-A graph has a cycle if and only if DFS produces a back edge
+A graph has a cycle if and only if DFS produces a back edge.
+
+- Tree Edge: An edge (u, v) where v is discovered after u (i.e., v is a child of u in the DFS tree)
+
+- Back Edge: An edge (u, v) where v is an ancestor of u in the DFS tree. This is detected if v is already discovered (d[v] is set) but not yet finished (f[v] is not set)
+
+### Pseudocode to detect if a back edge is detected
+
+def DFS(graph, u):
+    global time
+    global has_cycle
+
+    u.visited = True
+    time = time + 1
+    u.d = time
+
+    for v in u.neighbors:
+        if not v.visited:
+            v.pi = u
+            DFS(graph, v)
+        # Back edge detected (v is an ancestor and not yet finished)
+        elif v.d < u.d and v.f is None:  
+            has_cycle = True  # Indicate that a back edge (and thus a cycle) exists
+
+    time = time + 1
+    u.f = time  # Record the finish time

@@ -1,0 +1,18 @@
+# Topological Sorting
+
+Application of DFS
+
+Given a directed, acyclic graph, sort it such that every edge goes from a lower rank vertext to a higher rank vertex. This ONLY works on directed, acyclic graphs. This is known as the topologically-sorted order.
+
+- Nodes: tasks
+- Edges: dependencies
+
+Basic idea:
+
+- Run a DFS on the graph
+- Sort the nodes in descending order according to their finish times
+- The two above steps can be combined into one step--as each node finishes, place it at the head of a list; this is the descending order
+
+## Complexity
+
+O(v + e) time complexity; we visit each vertex once and each edge once
