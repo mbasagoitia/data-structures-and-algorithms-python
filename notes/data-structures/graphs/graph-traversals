@@ -114,7 +114,8 @@ def DFS(graph, u):
             DFS(graph, v)
         # Back edge detected (v is an ancestor and not yet finished)
         elif v.d < u.d and v.f is None:  
-            has_cycle = True  # Indicate that a back edge (and thus a cycle) exists
+            # Indicate that a back edge (and thus a cycle) exists
+            has_cycle = True  
 
     time = time + 1
     u.f = time  # Record the finish time

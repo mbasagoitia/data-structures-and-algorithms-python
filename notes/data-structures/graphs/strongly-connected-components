@@ -1,0 +1,45 @@
+# Strongly Connected Components
+
+In a directed graph, an SCC is a subset of vertices where for any pair of vertices in the SCC, there exists a path (not necessarily) between them. If one node does not point to the other node(s) in the path, it is not an SCC.
+
+The path must lie entirely inside that subset.
+
+For example, in a graph with vertices {1 ... 9}, a subset may be {1, 2, 3} or {5, 6, 8, 9}
+
+## Maximal SCC
+
+An SCC is maximal if the addition of any vertices would make the SCC not an SCC anymore, since there would be no paths from the "new" vertex to the rest of the component.
+
+## Properties of MSCCs
+
+- Two different MSCCs of a graph cannot share a vertex; otherwise that would be a larger SCSS, meaning neither MSCSS is maximal.
+
+- Taking a union of all MSCCs of a graph gives you the entire set of the graph's vertices.
+    - A single vertex is trivially an MSCC.
+
+- An MSCC Supergraph is composed of nodes, each of which is a set of MSCCs compressed into a single node
+    - **The MSCC Supergraph is a directed, acyclic graph**
+    - This is important because now we can perform algorithms such as DFS that require a directed, acyclic graph!
+
+- The reverse graph has the same MSCCs as the original graph
+    - A reverse graph is a graph where the direction of every edge has been reversed
+
+## Finding MSCCs of a Graph
+
+- Perform DFS on the graph
+    - This will give us our start and finish times for each vertex
+    - Record the finishing times in descending order (just like topological sort)
+- Reverse the edges of the graph and create a new adjacency list/matrix
+- Perform DFS on the reverse graph in the descending order of the finish times of the original graph
+    - As you do this, print out the MSCCs and remove them from the list you created in step 1; this will give you the MSCCs
+
+### Why does this Work?
+
+- The supergraph is a directed, acyclic graph (DAG)
+- The reverse graph has the same set of MSCCs as the original graph
+
+The initial DFS search gives you the topological sort of the supergraph. You can represent each MSCC's finish time as the finish time of its latest finishing node.
+
+When we do the reverse DFS, we "remove" cycles by finishing each MSCC from the supergraph and considering only one MSCC at a time
+
+Running time is 2 DFS (V + E) plus 1 graph reversal (V + E), overall linear time O(n)
