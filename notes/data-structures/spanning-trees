@@ -1,18 +1,20 @@
 # Spanning Trees and Minimal Spanning Trees
 
-Concept that works with undirected graphs
+Concept that works with weighted, undirected graphs
 
 Recall that a tree is acyclic and strongly connected
 
 ## Spanning Tree
 
-A spanning tree is a subset of edges such that the graph is a tree (acyclic, strongly connected)
+A spanning tree of a graph is an acyclic, strongly-connected subset of vertices that includes all the vertices of the original graph, but only enough edges to connect the vertices without forming any cycles.
 
-- A spanning tree can only be built from a graph that is strongly-connected (no islands)
+A spanning tree can only be built from a graph that is strongly-connected (no islands)
 
 ## Minimal Spanning Tree
 
-A spanning tree such that the sum of the edge weights is as small as possible
+A spanning tree such that the sum of the edge weights is as small as possible. No cycles allowed.
+
+A graph can have multiple MSTs if there are multiple edges with the same weight.
 
 Principle: Any temporarily-added edge that is not in the MST (but is in the original graph) should have weight greater than all of the other edges of the cycle it creates. If your MST satisfies this principle, then it is indeed a MST.
 
