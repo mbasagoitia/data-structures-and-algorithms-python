@@ -56,9 +56,26 @@ This is a huge overestimation!
 
 - Pay $3 for each insertion
     - $1 for actual cost of insertion
-    - $2 for future costs associated with resizing ($1 for copying itself, $1 for copying another element in the first half of the array)
+    - $2 for future costs associated with resizing ($1 for copying itself, $1 for copying another element in the first half of the array since the new allocated size is doubled)
     - In this way, the latest n/2 inserts are paying for the earliest n/2 inserts which already paid when they were copied over
 
 - In this way, the cost of resizing is already paid for; the cost of an insertion remains $3 even if resizing occurs.
 
 Therefore, the amortized cost of n insertions is 3n
+
+## Potential Functions
+
+Idea borrowed from physics
+
+Mathematically-rigorous alternative method to the accounting method to perform amortized analysis
+
+Basic idea: Associate a potential function with the data structure
+
+Think of operations on your data structures creating new instances of the data structure (Di -> Di + 1) with computation cost c.
+
+Amortized cost = potential(D sub(i + 1)) - potential(Dsub(i)) + csub(i)
+    - A.C. = change in the potential plus the cost of the operation
+
+Total amortized cost of n operations: actual cost + total change in potential from initial data structure to final data structure
+
+For any sequence of n operations, the amortized cost places an upper bound on the actual costs if we can guarantee that the potential of later data structure instances is greater than or equal to the starting potential. Potential should always remain above the starting value, but it can decrease. Think of the rolling ball... it can go up the hill, but can never go lower than the starting point at ground level.
