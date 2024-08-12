@@ -1,0 +1,25 @@
+# Spanning Trees and Minimal Spanning Trees
+
+Concept that works with undirected graphs
+
+Recall that a tree is acyclic and strongly connected
+
+## Spanning Tree
+
+A spanning tree is a subset of edges such that the graph is a tree (acyclic, strongly connected)
+
+- A spanning tree can only be built from a graph that is strongly-connected (no islands)
+
+## Minimal Spanning Tree
+
+A spanning tree such that the sum of the edge weights is as small as possible
+
+Principle: Any temporarily-added edge that is not in the MST (but is in the original graph) should have weight greater than all of the other edges of the cycle it creates. If your MST satisfies this principle, then it is indeed a MST.
+
+## Algorithms for Calculating MSTs
+
+- Prim's Algorithm
+
+
+
+- Kruskal's Algorithm
