@@ -22,6 +22,28 @@ Principle: Any temporarily-added edge that is not in the MST (but is in the orig
 
 - Prim's Algorithm
 
+Basic Idea: Starts with an arbitrary node and grows a MST by repeatedly adding the smallest edge that connects a vertex in the tree to a vertex outside the tree.
+
+At each step, consider all edges connecting the vertices in the MST to vertices outside it. Select the edge with the smallest weight and add the corresponding vertex to the MST.
+
+Continue adding the smallest edge that expands the MST until all vertices are included in the MST.
+
+Uses a priority queue (often implemented using a binary heap)to efficiently select the minimum weight edge at each step.
+
+Array or Hash Table: To keep track of the vertices included in the MST.
+
+Time Complexity:
+
+O(V^2) using an adjacency matrix and simple array to find the minimum edge.
+O(E log V) using an adjacency list with a priority queue, where E is the number of edges and V is the number of vertices.
+
+Use Case: Prim's Algorithm is generally preferred for dense graphs, where the number of edges is large relative to the number of vertices
 
 
 - Kruskal's Algorithm
+
+Basic Idea: Starts from an isolated "forest" of every node by itself, then sorts edges in ascending order of weight.
+
+For all edges in sorted order, if the edge connects two different trees in the forest, add the edge to create a single tree. Do not add the edge if the two nodes it would connect are already in the same tree (this could create a cycle)
+
+Time complexity: E log(E) to sort the edges + V log*(V) to use union-find
