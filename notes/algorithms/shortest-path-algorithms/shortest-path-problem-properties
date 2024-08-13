@@ -1,0 +1,35 @@
+# Shortest Path Problems
+
+Given a weighted (negative or non-negative), directed graph, what is the least weight path from the source to the destination?
+
+Think Google Maps
+- Weights are travel time, traffic, distance, speed limits, etc.
+- Given option to choose filters by distance, travel time, etc.
+
+## Single Source Shortest Paths
+
+Given a directed, weighted graph and a single source vertex, find the shortest path from the source to all destinations
+
+Output is a table with all vertices and the cost and path/sequence of edges (actually you only need to store the parent, not entire path...see below) from the source to each vertex/destination. You can then perform table lookups to find the lowest-cost path.
+
+If you choose a new source, a new table will need to be computed.
+
+A reversed graph can be used to compute single destination paths with same logic.
+
+## All Pairs Shortest Paths
+
+Given a directed, weighted graph, compute for all pairs of vertices the shortest path distance and the path itself.
+
+More expensive to compute than single source.
+
+## Properties of Shortest Paths
+
+- Shortest paths form a tree-like structure
+- Instead of storing the entire path in the table, instead store the parent of the destination node and recursively look up parents of those nodes to get the shortest path.
+    - This is the optimal substructure property: the path to any intermediate nodes on the path from one node to another is also the shortest path to the intermediate node.
+
+## Cycles in Shortest Path Problems
+
+Cycles give you infinitely many paths from source to destination. Because the weight of the cycle is >= 0, taking the cycle only makes the paths more costly, so it is irrelevant when computing shortest path.
+
+However, if the graph includes negative weights, and specifically a negative weight cycle, cycles cause the algorithm to take it over and over, decreasing the path distance to infinity. We don't consider the shortest path when the graph includes a negative weight cycle.
