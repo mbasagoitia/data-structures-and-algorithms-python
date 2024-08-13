@@ -1,0 +1,35 @@
+# Union-Find Data Structures and Rank Compression
+
+Disjoint Set Representation: Given a family of disjoint subsets, each subset having a designated representative, we can represent each subset as a reverse tree (disjoint set forests)
+
+Operations:
+
+- Make set(j)
+- Find(i): Find the subset containing i and return that subset's representative
+- Union(2, 7): Create a new set which merges the two sets containing each element
+
+The time complexity could be bad in the worst case if the representative is not chosen carefully
+
+## Union By Rank
+
+Associate a rank with every node which corresponds to the longest path from that node to a leaf node (depth of the node). The rank starts at 1, so a leaf node always has rank 1. The rank of the root node of the tree is the most important.
+
+When you perform union on two subsets/trees, the tree with the larger root depth becomes the new representative of the subset; the tree/subset with the lower rank becomes the child. If the two subsets have the same root depth/rank, then the representative can be randomly selected.
+
+This strategy disallows our tree from growing too high and makes find operations constant
+
+If two trees have different ranks and are unioned, the rank remains the same. If they are the same, the rank increases by one.
+
+Performing n make_set operations and an arbitrary number of union and find operations, the rank of the "final" tree is always <= log(n)
+
+A tree of rank r + 1 can only be formed if you union two trees of rank r.
+
+The largest rank you can have in a tree with n nodes is log(n+1), or O(log(n)), so each find operation cannot be more than log(n)
+
+## Rank Compression
+
+Basic idea: Make the rank of nodes in a tree smaller by rearranging the tree; discover nodes along the way while traversing from a node to the root, and updating the parent pointer of each node to be the root node. Next time you do a find operation, the path is shorter.
+
+An expensive find operation may happen once, but future operations are much faster after performing rank compression.
+
+New amortized (summation of average-case) time complexity is P(n alpha m) (inverse ackerman function) (extremely fast; practically constant) where n is makeset operations and m is find operations.
