@@ -1,0 +1,14 @@
+# Shortest Path on DAGs (Directed, Acyclic Graphs)
+
+On a DAG with edge weights, you can determine the shortest path to each node by performing Bellman-Ford algorithm, excluding the step to check for negative weight cycles.
+
+However, we will perform Bellman-Ford in a "special" manner:
+
+1. Topologically sort the graph so that each edge goes from a lower-rank to a higher-rank vertex
+2. Iterate through each vertex (in topological order) and relax each vertex's outgoing edge
+
+Time complexity: O(V + E)
+
+## Shortest Path Where Every Edge Has Equal Positive Weight
+
+Breadth-first search finds the shortest path where the size of the path is measured in terms of number of edges (depth of each node)
