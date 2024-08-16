@@ -1,0 +1,37 @@
+# Divide and Conquer Algorithms
+
+Divide and conquer is a type of algorithm design strategy.
+
+## Strategy
+
+Divide your input into smaller subproblems that you recursively solve, take the output of each of these subproblems, and combine them.
+
+In different cases, the divide step is trivial and the combine step requires work and vice versa, and sometimes, both steps require work.
+
+Examples:
+
+- In merge sort, the divide step is trivial (O(1)) since you are just dividing the array in half. The work is done in the combine step, the merge algorithm (O(n)).
+
+- In quick sort, the work is done in the divide step (the partition algorithm), and the combination is trivial.
+
+
+## Recurrence
+
+A recurrence is an equation that describes a function in terms of its value on other, typically smaller, arguments. It contains two or more cases; a recursive and a base case.
+
+A recurrence T(n) is algorithmic if, for every sufficiently large threshold constant n0 > 0, the following two properties hold:
+
+1. For all n < n0, we have T(n) = O(1)
+
+2. For all n >= n0, every path of recursion terminates in a defined base case within
+a finite number of recursive invocations
+
+There are several methods for solving recurrences:
+
+- Substitution method
+- Recursion tree method
+- Master method
+    - Provides bounds for recurrences of the form T(n) = aT(n/b) + f(n) where a > 0 and b > 1 are constants and f(n) is a given "driving" function.
+    - Arises in algorithms that create a subproblems, each of which is 1/b times the size of the original problem, using f(n) time for the divide and combine steps.
+    - Involves three cases that help determine running times for many divide and conquer algorithms.
+- Akra-Bazzi method
