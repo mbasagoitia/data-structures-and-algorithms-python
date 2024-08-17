@@ -1,0 +1,37 @@
+# Algorithms for Solving Linear Programs
+
+- Kantorovich and Danzig
+
+- Danzig developed the simplex algorithm, which is polynomial time in practice but can be exponential in the worst case
+
+- Kachiyan developed the ellipsoidal method
+
+- Interior point algorithms
+
+## Simplex Algorithm Overview
+
+We know that the decision variables and constraints lend themselves to the feasible region which is a convex polyhedron geometrically.
+
+The corners of the polyhedron are known as vertices, and this is what the simplex algorithm focuses on.
+
+We know that if an optimal solution to the objective function exists, it will be found at a vertex.
+
+If the objective function happens to be parallel to one of the faces of the polyhedron, than many optimal solutions exist. However, realize that this solution also touches a vertex.
+
+Therefore, if an optimal solution exists, it can be found at a vertex.
+
+We don't have to focus on all possible points; rather just the vertices.
+
+"Jump" from a vertex to another neighboring vertex as long as the objective function keeps increasing until you reach the optimal solution (cannot be increased more).
+
+The simplex algorithm is only able to discover any one vertex (corner), notes the value of the objective function at that point, then tries to discover an adjacent corner (vertex) such that the value of the objective function increases. It never moves "back" if the function increased in the direction it just travelled.
+
+## Vertices
+
+A vertex is the intersection in 2 dimensions of 2 faces such that the point being defined by the intersection belongs to the polygon (satisfies all constraints).
+
+Two vertices are neighbors/adjacent if they share a common side/face of the polygon.
+
+## Interior Point
+
+These types of methods start from a point inside the polygon and move towards a vertex.
