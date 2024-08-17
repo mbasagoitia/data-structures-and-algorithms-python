@@ -1,0 +1,33 @@
+# Network Flow Problems
+
+This example network flow problem consists of a directed graph with a source and a sink node--think a pipeline that distributes some commodity like oil. May contain cycles. Each edge has a capacity that can carry a certain amount of flow over a given unit of time.
+
+The goal is to send as much oil as possible from the source to the sink, subject to the following constraints:
+
+- Maximize commodity sent (total flow)
+- Can only be sent along the direction of the edges as they currently exist in the graph
+- Cannot send more flow along an edge than its capacity
+- Flow conservation: for any node, the total flow that comes into the node must equal the total flow that goes out of the node. The source and sink are exempt from this rule.
+    - The amount of flow that leaves the source should equal the amount of flow that enters the source
+
+## How to Make this into a Linear Program
+
+Decision variables:
+- How much flow goes through each edge
+- x12, x14, x24, x42, x23, x34, x35, x45
+    - Interpret this as flow from 1 to 2, 1 to 4, 2 to 4, etc.
+
+Objective function:
+- Maximum of total flow leaving the source (same as total flow entering the sink)
+- Max x12 + x24; where these are the two edges leaving the source node 1
+
+Constraints:
+- x12 >= 0
+- x14 >= 0
+- etc... all decision variables must be non-negative (flow must be along the direction of the edge...if it were negative, it would indicate backwards flow)
+- x12 <= 10, x14 <= 5, etc... this means that the flow along each edge should be no more than its capacity
+- x12 + x42 = x24 + x23 etc...this means that the flow exiting each node along every outgoing edge must equal the flow entering the node from all incoming edges
+
+The solution will always be feasible (you can send 0 flow) and always bounded as long as you have bounded capacity along every edge.
+
+A LP solver would typically be slower than a dedication network flow solver with dedicated algorithms, but it is possible to solve problems like this with linear programs.
