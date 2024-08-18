@@ -1,0 +1,84 @@
+# FFT Introduction and Complex Numbers
+
+What is a Fourier Transform?
+
+Consider a signal anything that has a trend/series of values over time--stock prices, sound waves, temperatures, wind velocity, etc.
+
+We often measure discrete values of a signal between two points from 0 to n-1 and assume that it repeats the same patterns (periodic signal).
+
+Fourier described a signal as a sum of sinusoidal frequency components.
+
+The Fourier Transform goes from the original signal as a sequence over time into the frequency components/harmonics of the signal.
+
+The inverse Fourier Transform does the opposite.
+
+Uses:
+- Smoothing/denoising signals
+- Look at and adjust seasonal trends in data
+- Image processing
+- Signal processing
+- Data analysis
+
+This is extremely important!!!
+
+In our case, given a list of signals over time, we want to rapidly compute the Discrete Fourier Transform. The output is a sequence of values with length the same as the original sequence; inverse does the opposite--from frequency components back to the original signal. When performing the reverse, you might adjust the signal in the process such as throwing out high frequency signals (noise), for example. This would give you a smoothed version of the original signal!
+
+We will learn how to do this efficiently using divide and conquer and the Fast Fourier Transform.
+
+When computing Fourier Transforms, complex numbers arise.
+
+## Complex Numbers Overview
+
+- A complex number is a number of the form **a + bj** where a and b are real numbers and j is the square root of -1.
+- Therefore, the real part of the number is a and the imaginary part is b.
+- Think of j itself as 0 + 1j
+- j = square root of -1 (sometimes known as i; using different notation here because Python uses j)
+- Conversely, j^2 = -1
+- You can visualize complex numbers on a complex plane where the real part is written as part of the x-axis and the imaginary part is part of the y-axis; every complex number is a vector with x (real) and y (imaginary) coordinates.
+
+
+## Arithmetic on Complex Numbers
+
+- Addition/subtraction: simply add/subtract the real parts of each number and the imaginary parts of each number.
+- Multiplication: (x1 + y1j) * (x2 + y2j) = (x1x2 + y1y2j^2 + x1y2j + x2y1j) -- polynomial multiplication
+    - Remember that j^2 = -1
+    - This simplifies to (x1x2 - y1y2) + (x1y2 + x2y1)j
+
+- Complex conjugate: x - yj
+    - Same real part, negated imaginary part
+    - When you multiply a complex number with its complex conjugate, you get x^2 + y^2 (no imaginary part).
+    - On the complex plane, the complex conjugate is a reflection of the vector around the x (real) axis.
+    - The square root of a number multiplied by its complex conjugate (square root z * zbar) equals the length of the complex vector (absolute value/modulus of z)
+
+- Example: absolute value/modulus of 8 + 10j = square root of 8^2 + 10^2 = square root of 164 = 12.9... which is the length of the vector.
+
+- Division: Multiply by the complex conjugate of the denominator
+    - (a + bj)/(c + dj) = (a + bj)/(c + dj) * (c - dj)/(c - dj)
+    - Simplification gives us ((ac + bd) + (bc - adj)) / c^2 + d^2
+
+## Gauss's Theorem
+
+In any polynomial equation of degree n, there are n complex roots. These are called the roots of unity.
+
+## Other Properties of Complex Numbers
+
+l = modulus (length) of the vector, square root of x^2 + y^2
+theta = phase/argument of the vector, expressed as an angle in radians measured counterclockwise from the x-axis
+
+If you multiply two complex numbers, l (length) becomes l1 * l2 and the angle becomes theta1 + theta2
+
+## DeMoivre's Theorem
+
+e^(j*theta) = cos theta + sin theta * j
+
+## Complex Roots of Unity
+
+A number w is a complex root of unity if w^n = 1.
+
+More specifically, it is an nth root of unity.
+
+1 is a special complex number and 1 = modulus 1 * e^0j (modulus is 1 and angle is 0)
+
+The roots of unity form a series of n vectors of length 1 and where the angle between each vector is 2pi/n.
+
+wn = cos(2pi/n) + sin(2pi/n)j; plug in the number of roots for n <- is this right?
