@@ -112,4 +112,3 @@ This is the exact same as grade school algorithm!
    - The new recurrence relation is `T(n) = 3 T(n/2) + O(n)`
    - When solved, this yields a time complexity of `O(n^1.54)`
 
-
