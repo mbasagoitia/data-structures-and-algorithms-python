@@ -26,6 +26,6 @@ Whenever you take the FFT of a sequence of real numbers, you have this symmetry.
 
 We will analyze up to 512 weeks, interpreted as a frequency of 1 every 2 weeks
 
-Each frequency A1 ... An-1 is i/n, or 1/1024, 2/2024, etc.
+Each frequency A1 ... An-1 is i/n, or 1/1024, 2/1024, etc.
 
 As you increase the x number of lowest frequencies, the signal becomes more specific to the data (rewatch this lecture)
