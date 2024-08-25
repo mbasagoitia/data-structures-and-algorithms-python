@@ -45,7 +45,7 @@ Steps:
     - The best option and our recurrence would be *the maximum of the following:* maxRevenue(L - l1) + p1, maxRevenue(L - l2) + p2 ... maxRevenue(L - ln) + pn, and 0. Why 0? 0 would be a decision to waste the entire rod (no revenue). Whichever of these options provides the best answer will be the best answer for the original problem.
 3. Memoize the problem using arrays or hashtables--cache the results of overlapping subproblems.
 
-One solution would be to loop through the values in the table and keep track of a currentMax value, comparing it against the maximum solution for each rod length (maxRevenue(L - ln)) and updating as necessary, then returning currentMax. Your base cases would be where L == 0 or L < 0.
+The naive solution would be to loop through the values in the table and keep track of a currentMax value, comparing it against the maximum solution for each rod length (maxRevenue(L - ln)) and updating as necessary, then returning currentMax. Your base cases would be where L == 0 or L < 0.
 
 This would be a very slow implementation (exponential, 2^n)! **It will also calculate the same subproblem many times,** which leads to lots of repeated work. Can we speed it up?
 
