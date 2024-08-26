@@ -81,4 +81,4 @@ More specifically, it is an nth root of unity.
 
 The roots of unity form a series of n vectors of length 1 and where the angle between each vector is 2pi/n.
 
-wn = cos(2pi/n) + sin(2pi/n)j; plug in the number of roots for n <- is this right?
+wn = cos(2pi/n) + j sin(2pi/n)
