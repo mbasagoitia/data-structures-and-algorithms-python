@@ -1,0 +1,42 @@
+# NP Definition
+
+The set of problems for which we don't know if a polynomial time solution exists, but which can be verified with a certificate (only for the "yes" answer) in polynomial time.
+
+## Graph 3-Coloring Problem
+
+Given a graph, can we color each node 1 of 3 colors (red, green, blue) such that no edge connects two nodes of the same color?
+
+Certificate: Given a set of vertices and the color that goes with each one, this answer can be verified in polynomial time.
+
+The best algorithms we know of to solve this problem are exponential (2^n).
+
+## Boolean Satisfiability Problem
+
+Given a boolean formula with variables x1 ... xn and a series of various clauses and conditions applied (and, or, not), is there a truth assignment that makes this formula true?
+
+We need to find a true/false value for each variable such that the entire formula evaluates to true.
+
+Return true if there exists a truth assignment that makes the formula true and no if none exists.
+
+Certificate: Truth assignment--we can easily check if the given truth assignment satisfies the formula. We can do this in O(n) time.
+
+However, for an input size n, there are 2^n possible truth assignment checks, which is not practical.
+
+## Travelling Salesperson (TSP)
+
+There are n locations in a city with roads connecting them. Given a starting point, visit each of the locations exactly once and come back to the starting point. Suppose that each road has a cost and you have a budget. The total cost cannot exceed the budget; is it possible to traverse the graph under the budget?
+
+Certificate: Sequence of vertices and edges that are visited.
+    - Check that every vertex is visited exactly once
+    - Check that we start and end at the same point
+    - Check that the sum of edge weights is <= the budget
+
+The best algorithm we know of has O(2^n) time; the brute force approach has to check every way of ordering the vertices, which has O(n!) time.
+
+## Meaning of Nondeterministic Polynomial Time (NP)
+
+Imagine a computer with clairvoyant powers that can guess the certificate of a problem, check it against a verifier, and have it either tell you yes or no. Is this possible?
+
+Computers that we currently have do not have this power, but quantum computers do in a limited sense.
+
+The only way we can currently guess in the real-world is to run through all possibilities, which of course has exponential time.

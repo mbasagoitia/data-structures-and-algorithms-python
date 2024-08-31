@@ -1,0 +1,67 @@
+# NP-Completeness and Reductions
+
+## Reduction
+
+A reduction of problem A to problem B takes an input to problem A and converts it to an input to problem B such that if I can solve B, then I can treat this procedure as an algorithm for A.
+
+If A can be converted to B, what conclusions can we draw?
+
+- If there is a polynomial time reduction from A to B and B can be solved in polynomial time, then A can be solved in polynomial time.
+- If we can reduce from A to B and A cannot be solved in polynomial time, then B cannot be solved in polynomial time either.
+
+## NP-Complete Problems
+
+A problem is NP-complete if it is in NP and every problem in NP is polynomial time reducible to it.
+
+If this problem can be solved in polynomial time, then P = NP (since every NP problem can be reduced to it).
+
+If it cannot be solved in polynomial time, then P != NP.
+
+If there are such problems, then all efforts can be directed to solve them!
+
+We do know of some NP-complete problems which are all reducible to one another. This means that if any of these problems can be solved in polynomial time, then we can solve all NP problems in polynomial time.
+
+## 3-CNF-SAT
+
+The Cook-Levin Theorem states that the 3-CNF-SAT problem is NP-complete. There is a proof that all NP problems can be reduced to it in polynomial time.
+
+3: every clause has 3 literals
+
+Conjuctive normal form: AND of ORs
+
+Satisfiability: is there a truth assignment to the variables that makes the entire formula true?
+
+Given a set of boolean variables x1 ... xn and a boolean formula in a special form of clauses joined by AND clauses, where each clause is the OR of 3 literals where each literal is either a variable or a negation of a variable (xj or NOT xj), is there a truth assignment to the variables that makes the entire formula true?
+
+This problem is in NP.
+
+Certificate: truth assignment which can be easily verified in polynomial time
+
+Every problem in NP reduces to the 3-CNF-SAT problem, including RSA-FACT and TSP.
+
+If we can reduce 3-CNF-SAT to some problem A in polynomial time, then A becomes NP-complete.
+
+## K-Clique
+
+Given a graph G and number K, is there a clique in the graph of size K or more (a clique is a set of nodes such that all possible edges exist between them)?
+
+Returns yes or no
+
+Certificate: set of vertices that form the k-clique
+
+Why is K-Clique NP-complete? We need to find a reduction from a known NP-complete problem (3-CNF-SAT) to K-Clique.
+
+## Reduction
+
+An input is a 3-CNF-SAT formula that is converted to a graph and some number K such that if this graph has a K-clique, then the original formula is satisfiable, and not if the graph does not have a K-clique.
+
+Example: 
+
+- 4 variables (n = 4) x1 ... x4
+- 3 clauses (m = 3) C1 ... C3
+
+From the above formula, we need to produce a graph. For every clause, we make vertices out of each literal (if we have 3 clauses, we have 3*m vertices). Make all connections between vertices except for those in the same clause and those that are negations of each other. There is a clique of size m if and only if the original problem is satisfiable.
+
+The clique selected exactly one vertex from every clause. If we assign every one of these to true, we have a truth assignment must satisfy the formula and must not be contradictory.
+
+Therefore, if a clique of size m exists, the original formula is satisfiable and vice versa.
