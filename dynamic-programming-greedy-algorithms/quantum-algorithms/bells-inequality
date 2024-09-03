@@ -1,0 +1,23 @@
+# Bell's Inequality
+
+Consider the analogy of Alice on Jupiter and Bob on Mars. They cannot communicate with each other. They are each sent a bit A and B and must return a bit X and Y. They are allowed to return to Earth if A AND B == X XOR Y.
+
+Bell's Inequality states that no matter what strategy they employ, the probability of winning is always <= 0.75, assuming "classical" information.
+
+If they are allowed to share quantum information, the winning probability can be increased to 0.8.
+
+How?
+
+They share an entangled qubit q1q2 in the state ( 100> + 111>) called the EPR state.
+
+Alice takes q1 and Bob takes q2.
+
+When Alice receives a and it is a 1, she applies a rotation of pi/8. If Bob gets a 1, he rotates it by -pi/8. If either of them receive a 0, they don't do anything. They then measure their qubits and send an answer x and y back.
+
+For example, if they both receive 0s, they both measure the quantum state 1/sqrt2(00 + 11) and they will win for sure.
+
+If Alice gets a 1 and Bob gets a 0, a rotation happens on the first qubit and probability of winning is about 0.85. The same happens if Alice gest a 0 and Bob gets a 1.
+
+If they both get 1s, they each perform their respective rotation of pi/8 or -pi/8. The probability of winning in this case is 0.5.
+
+Overall probability of winning is 0.8 because of entangled bits. It allows them to communicate with each other.
