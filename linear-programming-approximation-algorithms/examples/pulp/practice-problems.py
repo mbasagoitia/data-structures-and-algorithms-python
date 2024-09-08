@@ -67,21 +67,21 @@ from pulp import *
 # At least 50 grams of protein.
 # No more than 40 grams of fat.
 
-diet_problem = LpProblem("diet_problem", LpMinimize)
+# diet_problem = LpProblem("diet_problem", LpMinimize)
 
-a = LpVariable("food_a", 0)
-b = LpVariable("food_b", 0)
+# a = LpVariable("food_a", 0)
+# b = LpVariable("food_b", 0)
 
-diet_problem += 0.5*a + 0.3*b
+# diet_problem += 0.5*a + 0.3*b
 
-diet_problem += 400*a + 200*b >= 600
-diet_problem += 30*a + 10*b >= 50
-diet_problem += 20*a + 5*b <= 40
+# diet_problem += 400*a + 200*b >= 600
+# diet_problem += 30*a + 10*b >= 50
+# diet_problem += 20*a + 5*b <= 40
 
-diet_problem.solve()
-print(constants.LpStatus[diet_problem.status])
-print(a.varValue, b.varValue)
-print(diet_problem.objective.value())
+# diet_problem.solve()
+# print(constants.LpStatus[diet_problem.status])
+# print(a.varValue, b.varValue)
+# print(diet_problem.objective.value())
 
 # Problem 4
 
@@ -102,3 +102,39 @@ print(diet_problem.objective.value())
 # A list of integers r representing the resource requirements for each project.
 # A list of integers p representing the profit for each project.
 # An integer R representing the total resources available.
+
+squares = [x**2 for x in range(1, 11)]
+print(squares)
+
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+evens = [x for x in numbers if x % 2 == 0]
+print(evens)
+
+words = ['apple', 'banana', 'cherry', 'date']
+word_lengths = [len(word) for word in words]
+print(word_lengths)
+
+data = [1, 'hello', 3.5, 'world', True]
+strings_only = [var for var in data if isinstance(var, str)]
+print(strings_only)
+
+nested_list = [[1, 2], [3, 4], [5, 6]]
+flattened_list = [x for y in nested_list for x in y]
+print(flattened_list)
+
+fizz_buzz = ["FizzBuzz" if i % 3 == 0 and i % 5 == 0 else "Fizz" if i % 3 == 0 else "Buzz" if i % 5 == 0 else i for i in range(1, 16)]
+print(fizz_buzz)
+
+nested_list2 = [[1, 2, 3], [4, 5], [6, 7, 8, 9]]
+flattened_list2 = [x for y in nested_list2 for x in y if x % 2 == 0]
+print(flattened_list2)
+
+matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+transposition = []
+
+for i in range(len(matrix)):
+    for j in range(len(matrix[i])):
+        # Not working...
+
+print(matrix)
