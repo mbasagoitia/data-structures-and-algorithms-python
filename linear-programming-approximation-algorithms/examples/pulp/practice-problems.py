@@ -175,29 +175,58 @@ from pulp import *
 # Warehouse demand: demand[j] for each warehouse j.
 # Transportation cost matrix: cost[i][j] represents the transportation cost from factory i to warehouse j.
 
-factory_problem = LpProblem("factory_problem", LpMinimize)
-n = 3
-m = 3
-cost = [
-  [4, 6, 9],
-  [5, 7, 3],
-  [8, 4, 7]
-]
+# factory_problem = LpProblem("factory_problem", LpMinimize)
+# n = 3
+# m = 3
+# cost = [
+#   [4, 6, 9],
+#   [5, 7, 3],
+#   [8, 4, 7]
+# ]
 
-capacity = [100, 150, 200]
-demand = [80, 120, 150]
+# capacity = [100, 150, 200]
+# demand = [80, 120, 150]
 
-decision_vars = [[LpVariable(f'x{i}{j}', 0) for j in range (m)] for i in range (n)]
+# decision_vars = [[LpVariable(f'x{i}{j}', 0) for j in range (m)] for i in range (n)]
 
-factory_problem += lpSum(decision_vars[i][j] * cost[i][j] for j in range(m) for i in range(n))
+# factory_problem += lpSum(decision_vars[i][j] * cost[i][j] for j in range(m) for i in range(n))
 
-for i in range(n):
-    factory_problem += lpSum(decision_vars[i][j] for j in range(m)) <= capacity[i]
+# for i in range(n):
+#     factory_problem += lpSum(decision_vars[i][j] for j in range(m)) <= capacity[i]
 
-for j in range(m):
-    factory_problem += lpSum(decision_vars[i][j] for i in range(n)) == demand[j]
+# for j in range(m):
+#     factory_problem += lpSum(decision_vars[i][j] for i in range(n)) == demand[j]
 
-factory_problem.solve()
-print(constants.LpStatus[factory_problem.status])
-print([[j.varValue for j in i] for i in decision_vars])
-print(factory_problem.objective.value())
+# factory_problem.solve()
+# print(constants.LpStatus[factory_problem.status])
+# print([[j.varValue for j in i] for i in decision_vars])
+# print(factory_problem.objective.value())
+
+# quiz_problem = LpProblem("quiz_problem", LpMaximize)
+
+# decision_vars = [LpVariable(f'x{x}', lowBound=-15, upBound=15) for x in range (5)]
+
+# quiz_problem += 2*decision_vars[0] - 3*decision_vars[1] + decision_vars[2]
+# quiz_problem += decision_vars[0] - decision_vars[1] + decision_vars[2] <= 5
+# quiz_problem += decision_vars[0] - decision_vars[1] + 4*decision_vars[2] <= 7
+# quiz_problem += decision_vars[0] + 2*decision_vars[1] - decision_vars[2] + decision_vars[3] <= 14
+# quiz_problem += decision_vars[2] - decision_vars[3] + decision_vars[4] <= 7
+
+# quiz_problem.solve()
+# print(quiz_problem.objective.value())
+
+quiz_problem2 = LpProblem("quiz_problem", LpMinimize)
+
+decision_vars = [LpVariable(f'x{x}', lowBound=-1, upBound=1, cat="Integer") for x in range (3)]
+
+quiz_problem2 += 2*decision_vars[0] - 3*decision_vars[1] + decision_vars[2]
+
+quiz_problem2 += decision_vars[0] - decision_vars[1] >= 0.5
+quiz_problem2 += decision_vars[0] - decision_vars[1] <= 0.75
+quiz_problem2 += decision_vars[1] - decision_vars[2] <= 1.25
+quiz_problem2 += decision_vars[1] - decision_vars[2] >= 0.95
+
+quiz_problem2.solve()
+print(constants.LpStatus[quiz_problem2.status])
+print([v.varValue for v in decision_vars])
+print(quiz_problem2.objective.value())
