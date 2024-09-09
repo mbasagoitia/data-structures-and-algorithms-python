@@ -103,38 +103,101 @@ from pulp import *
 # A list of integers p representing the profit for each project.
 # An integer R representing the total resources available.
 
-squares = [x**2 for x in range(1, 11)]
-print(squares)
+# profit_problem = LpProblem("profit_problem", LpMaximize)
+# n = 4
+# p = [10, 15, 20, 25]
+# r = [2, 3, 4, 5]
+# R = 10
+# decision_vars = [LpVariable(f'x{i + 1}', 0) for i in range(n)]
+# profit_problem += lpSum(p[i]*decision_vars[i] for i in range(n))
+# profit_problem += lpSum(r[i]*decision_vars[i] for i in range(n)) <= R
 
-numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+# profit_problem.solve()
+# print(constants.LpStatus[profit_problem.status])
+# print([v.varValue for v in decision_vars])
+# print(profit_problem.objective.value())
 
-evens = [x for x in numbers if x % 2 == 0]
-print(evens)
+# squares = [x**2 for x in range(1, 11)]
+# print(squares)
 
-words = ['apple', 'banana', 'cherry', 'date']
-word_lengths = [len(word) for word in words]
-print(word_lengths)
+# numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-data = [1, 'hello', 3.5, 'world', True]
-strings_only = [var for var in data if isinstance(var, str)]
-print(strings_only)
+# evens = [x for x in numbers if x % 2 == 0]
+# print(evens)
 
-nested_list = [[1, 2], [3, 4], [5, 6]]
-flattened_list = [x for y in nested_list for x in y]
-print(flattened_list)
+# words = ['apple', 'banana', 'cherry', 'date']
+# word_lengths = [len(word) for word in words]
+# print(word_lengths)
 
-fizz_buzz = ["FizzBuzz" if i % 3 == 0 and i % 5 == 0 else "Fizz" if i % 3 == 0 else "Buzz" if i % 5 == 0 else i for i in range(1, 16)]
-print(fizz_buzz)
+# data = [1, 'hello', 3.5, 'world', True]
+# strings_only = [var for var in data if isinstance(var, str)]
+# print(strings_only)
 
-nested_list2 = [[1, 2, 3], [4, 5], [6, 7, 8, 9]]
-flattened_list2 = [x for y in nested_list2 for x in y if x % 2 == 0]
-print(flattened_list2)
+# nested_list = [[1, 2], [3, 4], [5, 6]]
+# flattened_list = [x for y in nested_list for x in y]
+# print(flattened_list)
 
-matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-transposition = []
+# fizz_buzz = ["FizzBuzz" if i % 3 == 0 and i % 5 == 0 else "Fizz" if i % 3 == 0 else "Buzz" if i % 5 == 0 else i for i in range(1, 16)]
+# print(fizz_buzz)
 
-for i in range(len(matrix)):
-    for j in range(len(matrix[i])):
-        # Not working...
+# nested_list2 = [[1, 2, 3], [4, 5], [6, 7, 8, 9]]
+# flattened_list2 = [x for y in nested_list2 for x in y if x % 2 == 0]
+# print(flattened_list2)
 
-print(matrix)
+# matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+# transposition = [[row[i] for row in matrix] for i in range(len(matrix[0]))]
+
+# print(transposition)
+
+# words = ['apple', 'banana', 'cherry', 'date']
+# word_dict = {word:len(word) for word in words}
+
+# print(word_dict)
+
+# scores = {'Alice': 85, 'Bob': 92, 'Charlie': 87, 'David': 78}
+# pass_fail = {key:("Pass" if scores[key] >= 80 else "Fail") for key in scores}
+# print(pass_fail)
+
+# Factory Problem
+
+# A company has n factories producing goods and m warehouses that need to receive the goods.
+# Each factory can produce a certain number of goods, and each warehouse has a certain demand that needs to be met.
+# The transportation cost per unit of goods between each factory and warehouse is given by a matrix.
+
+# Your task is to determine how much goods each factory should send to each warehouse to minimize the total
+# transportation cost while meeting all the warehouse demands without exceeding the factory capacities.
+
+# Details:
+
+# Number of factories: n
+# Number of warehouses: m
+# Production capacity: capacity[i] for each factory i.
+# Warehouse demand: demand[j] for each warehouse j.
+# Transportation cost matrix: cost[i][j] represents the transportation cost from factory i to warehouse j.
+
+factory_problem = LpProblem("factory_problem", LpMinimize)
+n = 3
+m = 3
+cost = [
+  [4, 6, 9],
+  [5, 7, 3],
+  [8, 4, 7]
+]
+
+capacity = [100, 150, 200]
+demand = [80, 120, 150]
+
+decision_vars = [[LpVariable(f'x{i}{j}', 0) for j in range (m)] for i in range (n)]
+
+factory_problem += lpSum(decision_vars[i][j] * cost[i][j] for j in range(m) for i in range(n))
+
+for i in range(n):
+    factory_problem += lpSum(decision_vars[i][j] for j in range(m)) <= capacity[i]
+
+for j in range(m):
+    factory_problem += lpSum(decision_vars[i][j] for i in range(n)) == demand[j]
+
+factory_problem.solve()
+print(constants.LpStatus[factory_problem.status])
+print([[j.varValue for j in i] for i in decision_vars])
+print(factory_problem.objective.value())
