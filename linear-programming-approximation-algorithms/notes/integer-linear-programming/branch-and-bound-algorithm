@@ -1,2 +1,29 @@
 # Branch and Bound Algorithm for Solving Integer Linear Programs
 
+General max/min ILP problems are NP-hard (exponential time to solve), whereas LP problems can generally be solved fast with algorithms like simplex.
+
+Imagine that the LP relaxation of an ILP solution yielded the same solution as the ILP would (the LP solution happens to satisfy the integrality constraint).
+
+What about when the LP relaxation yields a fractional solution?
+
+## Branch and Bound
+
+Keep recursively solving the LP relaxation ignoring the integrality constraint, but every time it yields a fractional solution for one or more of the variables, "branch" into two possibilities (adding the constraint that variable is either <= the integer below it or >= the integer above it). Choose whichever branch gives you a more optimal solution (and satisfies the integrality constraint).
+
+This recursive procedure generates a branch and bound tree. At every leaf node, you try to solve the LP and have it yield an integer solution. If it doesn't, you branch again with more constraints.
+
+3 possibilities:
+
+- The leaf problem is infeasible because the constraints contradict each other (forget that leaf)
+- The leaf has an integer solution (record the solution)
+- The leaf has a fractional solution (expand/branch again)
+
+When all the leaves have been solved/reach the base case, stop recursion and return whichever solution has the max (or min) objective value that you recorded from the leaves that yieled integer solutions.
+
+In the worst case, this method can be exponential in time. There are ways to make this faster, but none that give us a provably efficient solution.
+
+## Make this Faster
+
+"Pruning"
+
+Keep track of the best integer solution in the tree so far. If any LP yields a fractional solution that is less optimal than the best solution so far, there is no need to further recurse down that tree because it won't give you a better answer than what you already have.
