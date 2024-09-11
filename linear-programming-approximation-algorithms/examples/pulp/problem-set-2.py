@@ -36,3 +36,48 @@ def encode_and_solve_three_coloring(n, edge_list):
 n = 5
 edge_list = [(1,2), (1, 3), (1,4), (2, 4), (3,4)]
 encode_and_solve_three_coloring(n, edge_list)
+
+# Write a function solve_warehouse_location(location_coords, R) wherein location_coords is a list of coordinates  [(𝑥0,𝑦0),…,(𝑥𝑛−1,𝑦𝑛−1)]
+#   and  𝑅>0
+#   is the distance limit. For your convenience, the euclidean_distance between two points is implemented. Setup and solve the ILP using PULP.
+
+# Your code should return a list of indices  [𝑖1,𝑖2,...,𝑖𝑘]
+#   which are the optimal locations for the warehouses to be located minimizing the number of warehouses and ensuring that every point is within distance  𝑑
+#   of a warehouse.
+
+# Objective: min: sum(w0 ... wn-1)
+
+# Constraints:
+# D[j] is the set of all points i where d_i_j <= R
+# for all j: sum(D[j]) >= 1
+
+from math import sqrt 
+
+def euclidean_distance(location_coords, i, j):
+    assert 0 <= i and i < len(location_coords)
+    assert 0 <= j and j < len(location_coords)
+    if i == j: 
+        return 0.0
+    (xi, yi) = location_coords[i] # unpack coordinate
+    (xj, yj) = location_coords[j]
+    return sqrt( (xj - xi)**2 + (yj - yi)**2 )
+
+    
+def solve_warehouse_location(location_coords, R):
+    assert R > 0.0, 'radius must be positive'
+    n = len(location_coords)
+    prob = LpProblem('Warehouselocation', LpMinimize)
+    #1. Formulate the decision variables
+    decision_vars = [LpVariable(f'w_{i}', 0, 1, cat="Binary") for i in range (n-1)]
+    prob += lpSum(decision_vars)
+    #2. Add the constraints for each vertex and edge in the graph.
+    # I can use the function above... need to interpret how it works
+    distances = {(i, j): sqrt((x*i - x*j)**2 + (y*i - y*j)**2) for x, y in range(n) for (i, j) in location_coords}
+    print(distances)
+    D = []
+    for (i, j) in distances:
+        if 
+    #3. Solve and interpret the status of the solution.
+    #4. Return the result in the required form to pass the tests below.
+    # your code here
+    raise NotImplementedError
