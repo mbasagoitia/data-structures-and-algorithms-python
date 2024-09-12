@@ -69,7 +69,7 @@ def solve_warehouse_location(location_coords, R):
     #1. Formulate the decision variables
     decision_vars = [LpVariable(f'w_{i}', 0, 1, cat="Binary") for i in range (n)]
 
-    var_map = {location_coords[i]: f'w_{i}' for i in range (n)}
+    var_map = {location_coords[i]: decision_vars[i] for i in range(n)}
     # print(var_map)
 
     prob += lpSum(decision_vars)
@@ -88,17 +88,24 @@ def solve_warehouse_location(location_coords, R):
     for key in D:
         temp = []
         for pair in D[key]:
-            temp.append(var_map[pair])
+            temp.append(var_map[pair])   
         prob += lpSum(temp) >= 1
 
-    # prob.solve()
-    # print(constants.LpStatus[prob.status])
-
+    prob.solve()
+    print(constants.LpStatus[prob.status])
+    sol = [v.varValue for v in decision_vars]
+    print(prob.objective.value())
+    res = []
+    for i in range(n):
+        if sol[i] == 1.0:
+            res.append(i)
+    print(res)
+    return res
 
     #3. Solve and interpret the status of the solution.
     #4. Return the result in the required form to pass the tests below.
     # your code here
-    # raise NotImplementedError
+    raise NotImplementedError
 
 location_coords = [(1, 2), (3, 5), (4, 7), (5, 1), (6, 8), (7, 9), (8, 14), (13, 6)]
 R = 5
