@@ -67,24 +67,39 @@ def solve_warehouse_location(location_coords, R):
     n = len(location_coords)
     prob = LpProblem('Warehouselocation', LpMinimize)
     #1. Formulate the decision variables
-    decision_vars = [LpVariable(f'w_{i}', 0, 1, cat="Binary") for i in range (n-1)]
+    decision_vars = [LpVariable(f'w_{i}', 0, 1, cat="Binary") for i in range (n)]
+
+    var_map = {location_coords[i]: f'w_{i}' for i in range (n)}
+    # print(var_map)
+
     prob += lpSum(decision_vars)
     #2. Add the constraints for each vertex and edge in the graph.
     # I can use the function above... need to interpret how it works
 
-    distances = {(i, j): euclidean_distance(location_coords, i, j) for i in range(len(location_coords)) for j in range(1, len(location_coords)) if i <= j}
-    print(distances)
-    
-    D = {pair: [] for pair in location_coords}
-    print(D)
-    for i in range (len(distances)):
-        
+    distances = {(i, j): euclidean_distance(location_coords, i, j) for i in range(len(location_coords)) for j in range(len(location_coords)) if euclidean_distance(location_coords, i, j) <= R}
+
+    D = {i: [] for i in range(n)}
+
+    for (i, j) in distances:
+        D[i].append(location_coords[j])
+    # print(decision_vars)
+    # print(D)
+
+    for key in D:
+        temp = []
+        for pair in D[key]:
+            temp.append(var_map[pair])
+        prob += lpSum(temp) >= 1
+
+    # prob.solve()
+    # print(constants.LpStatus[prob.status])
+
 
     #3. Solve and interpret the status of the solution.
     #4. Return the result in the required form to pass the tests below.
     # your code here
     # raise NotImplementedError
 
-location_coords = [(1, 2), (3, 5), (4, 7), (5, 1), (6, 8), (7, 9), (8,14), (13,6)]
+location_coords = [(1, 2), (3, 5), (4, 7), (5, 1), (6, 8), (7, 9), (8, 14), (13, 6)]
 R = 5
 locs = solve_warehouse_location(location_coords, R)
