@@ -20,3 +20,5 @@ for i = 1 to n:
     J[k] = J[k] + T[i] (maintain heap)
 
 Runs in O(n log(m)) if you use a priority queue. The greedy algorithm doesn't always match the optimal solution, but is bounded by a factor of 2 compared to the optimum.
+
+Imagine you sorted the jobs in descending order before performing the greedy algorithm. This would give you better performance and would be bounded by a factor of 3/2 compared to the optimum.
