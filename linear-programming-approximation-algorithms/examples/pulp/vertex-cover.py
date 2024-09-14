@@ -31,3 +31,18 @@ def compute_lp_relaxation_vertex_cover(n, edge_list):
 # print(compute_optimal_vertex_cover(len(edge_list), edge_list))
 print(compute_lp_relaxation_vertex_cover(len(edge_list), edge_list))
 
+def matching_based_vertex_cover(n, edge_list):
+    vertex_cover = [] 
+    remaining_edges = list(edge_list)
+    while len(remaining_edges) > 0:
+
+        (i,j) = remaining_edges[0]
+        vertex_cover.append(i)
+        vertex_cover.append(j)
+        remaining_edges = [(l,m) for (l,m) in remaining_edges if l != i and l != j and m != i and m != j]
+        print(f'adding nodes {i}, {j} to the cover')
+    return vertex_cover
+
+edge_list2 = [(1,2), (1,3), (1, 4), (2,3), (2,6), (3,4), (3,5), (3,6), (4, 5), (4,7), (5, 6), (5,7), (6,7)]
+
+print(matching_based_vertex_cover(13, edge_list2))

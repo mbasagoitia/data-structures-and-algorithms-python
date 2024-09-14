@@ -1,6 +1,8 @@
-# Approximation Algorithms for MAX 3-SAT problem
+# Approximation Algorithms for Maximum Satisfiability (MAX 3-SAT) Problem
 
-Recall that the MAX SAT problem involves n true/false variable and m clauses with (in this case 3) literals, the clauses being ANDs of ORs and the literals can be negated or not.
+Recall that you have n different boolean variables x1 ... xn which can either be True or False.
+
+You have various clauses with a specified number of literals (in this case, 3 literals). The clauses are ANDs of ORs of literals that may be negated (NOT).
 
 The goal is to find the truth assignment for n decision variables that satisfies the maximum number of m clauses. This problem is NP-complete. We can implement it as an integer linear program. Here, we will explore approximation algorithms.
 
