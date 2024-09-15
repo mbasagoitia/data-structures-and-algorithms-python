@@ -29,3 +29,13 @@ The reduction to TSP comes from the Hamiltonian cycle problem, which is itself r
 Given a graph that is not necessarily complete and has no edge weights/costs, assign a weight of 1 to each existing edge and fill in missing edges with a cost of 2. Remember that TSP requires a complete graph. 
 
 Our goal is to find a TSP tour of this new graph with cost <= n. The only way to do this in the original graph is to only choose edges of cost 1. If you are able to achieve this, it means the original problem was a Hamiltonian cycle.
+
+## TSPs are Hard to Approximate
+
+Unless P = NP, there is no approximation algorithm for TSP that can guarantee a bound of some constant times the optimum solution. Finding such an algorithm is itself NP-hard.
+
+Many practical instances of the TSP problem satisfy the metric property, in which distances/edge weights between nodes satisfy the triangle inequality--in other words, there will generally be edges A, B, and C, where:
+
+A -> B + B -> C >= A -> C
+
+Metric and Euclidean TSPs do in fact have approximation algorithms with 3/2 factor approximations or better. Only general TSPs where these properties don't hold have no polynomial time approximation algorithm.
