@@ -34,7 +34,7 @@ Our goal is to find a TSP tour of this new graph with cost <= n. The only way to
 
 Unless P = NP, there is no approximation algorithm for TSP that can guarantee a bound of some constant times the optimum solution. Finding such an algorithm is itself NP-hard.
 
-Many practical instances of the TSP problem satisfy the metric property, in which distances/edge weights between nodes satisfy the triangle inequality--in other words, there will generally be edges A, B, and C, where:
+Many practical instances of the TSP problem satisfy the metric property, in which distances/edge weights between nodes satisfy the triangle inequality, which is common in real-life distance scenarios--in other words, there will generally be edges A, B, and C, where:
 
 A -> B + B -> C >= A -> C
 
