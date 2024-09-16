@@ -29,23 +29,18 @@ def find_balanced_cut(n, adj_list):
     # Initialize the cut: first half in S1 (True), second half in S2 (False)
     cut = [True if i < n / 2 else False for i in range(n)]
 
-    # Run the greedy algorithm to balance the cut
     while True:
-        # Find an imbalanced node
         idx = find_imbalanced_node(adj_list, cut)
         if idx is False:
             break
         else:
-            # Flip the node to the other set
             cut[idx] = not cut[idx]
 
     return cut
 
 def find_imbalanced_node(adj_list, cut):
     for i in range(len(adj_list)):
-        # Count the number of edges to nodes in the same set
         same_set_edges = sum(1 for j in adj_list[i] if cut[i] == cut[j])
-        # If more than half of its neighbors are in the same set, it's imbalanced
         if same_set_edges > len(adj_list[i]) // 2:
             return i
     return False
