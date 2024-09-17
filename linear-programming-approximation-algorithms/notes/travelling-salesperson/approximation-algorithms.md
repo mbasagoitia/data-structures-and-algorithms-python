@@ -25,3 +25,22 @@ An Eulerian tour traverses every edge in an undirected graph exactly once and co
 For a graph to have an Eulerian tour, every vertex must have an even number of edges incident on it.
 
 There is a polynomial time algorithm that can construct an Eulerian tour from a graph.
+
+## Christofides Algorithm
+
+Approximation algorithm for TSPs that gives a factor 3/2 approximation
+
+- Start with a TSP instance and construct a minimum spanning tree (MST), assuming an arbitrary node is the root
+- Instead of a DFS as above, perform an Eulerian tour of the TSP tree
+    - However, this isn't currently possible because the leaf nodes have an odd number of edges incident on them (1)
+    - Remember that an Eulerian tour requires only an even number of edges connected to each node
+    - We will add some edges from the original graph back to the tree to satisfy this property
+- Construct a subgraph from only the nodes that have an odd number of edges and find a matching for each set of 2 vertices; ideally, a minimum-weight matching for which there is an algorithm
+    - There is always an even number of odd-edge nodes, so a valid matching will always exist
+- Add these edges to the MST--double edges may arise, which is ok
+- Now, each node has an even number of edges incident on it
+- Perform an Eulerian tour of the graph
+- Shortcut the Eulerian tour to remove nodes that have been previously visited; this gives you a TSP tour
+
+The weight of this tour is <= 3/2 the optimal tour
+
