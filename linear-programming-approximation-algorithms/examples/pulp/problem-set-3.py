@@ -59,6 +59,11 @@ def euclidean_distance(a, b):
     (xb, yb) = b
     return sqrt( (xb - xa)**2 + (yb - ya)**2)
 
+def calculate_R(coords, center_indices):
+    n = len(coords)
+    assert all( 0 <= j < n for j in center_indices)
+    rj_values = [ min([euclidean_distance(xj, coords[j]) for j in center_indices]) for xj in coords]
+    return max(rj_values)
 
 # Function find_farthest_point_from_current_centers
 # returns a pair (j, rj) where 
@@ -80,12 +85,13 @@ def greedy_k_centers(coords, k, debug=True): ## Please print messages from this 
     if debug:
         print(f'Initial center: {coords[0]}')
     # your code here
-    for i in range(1, k):
-        (farthestIdx, distance) = find_farthest_point_from_current_centers(coords[1::], centers)
-        if farthestIdx not in centers:
-            centers.append(farthestIdx)
-    (farthestIdx, distance) = find_farthest_point_from_current_centers(coords[1::], centers)
-    return (centers, farthestIdx)
+    for _ in range(1, k):
+        (j, rj) = find_farthest_point_from_current_centers(coords[1::], centers)
+        if j not in centers:
+            centers.append(j)
+    (j, rj) = find_farthest_point_from_current_centers(coords[1::], centers)
+    R = calculate_R(coords, centers)
+    return (centers, R)
     raise NotImplementedError
 
 coords = [(1,2), (3,5), (4,7), (8, 14), (9,3), (7,7), (6,5), (4, 6), (5,2), (1,8)]
