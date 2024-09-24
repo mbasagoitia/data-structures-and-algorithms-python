@@ -39,7 +39,6 @@ def rod_cutting(T, prices):
 print(rod_cutting(T, prices))
 
 
-
 # dp[i] = min(1 + dp[i - coins[k]] for all k)
 
 def coin_changing(target, coins):
