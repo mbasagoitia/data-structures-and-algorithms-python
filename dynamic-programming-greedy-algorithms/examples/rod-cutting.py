@@ -20,7 +20,7 @@ def coin_changing(target, coins):
     dp[0] = 0
     for i in range(1, target + 1):
         dp[i] = min(1 + dp[i - coins[j]] for j in range(len(coins)) if i - coins[j] >= 0)
-    print(dp)
+    # print(dp)
     return dp[target]
 
 print(coin_changing(2, [1, 2, 5, 10, 20]))
