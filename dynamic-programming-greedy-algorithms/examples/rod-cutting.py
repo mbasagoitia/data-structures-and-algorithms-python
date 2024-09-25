@@ -3,14 +3,6 @@
 T = 8
 prices = [1, 5, 8, 9, 10, 17, 17, 20]
 
-# def rod_cutting(T, prices):
-#     dp = {}
-#     dp[0] = 0
-#     for i in range(1, T + 1):
-#         dp[i] = max(prices[k - 1] + dp[i - k] for k in range(1, i+1))
-#     print(dp)
-#     return dp[T]
-
 def rod_cutting(T, prices):
     dp = {}
     S = []
@@ -50,3 +42,4 @@ def coin_changing(target, coins):
     return dp[target]
 
 print(coin_changing(2, [1, 2, 5, 10, 20]))
+
