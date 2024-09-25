@@ -66,21 +66,52 @@ def min_cost_path(grid):
 
 
 
-print(min_cost_path(grid))
+# print(min_cost_path(grid))
 
-T = 12
-coins = [1, 2, 5, 10]
+T = 2534
+coins = [1, 2, 5, 10, 250]
 
 def coin_change(T, coins):
     dp = [float("inf")] * (T + 1)
-    dp[0] = 0 
+    S = [None] * (T + 1)
+    S[0] = 0
+    dp[0] = 0
 
     for i in range(1, T + 1):
+        local_min = float("inf")
+        coin_used = None
         for coin in coins:
             if i - coin >= 0:
-                dp[i] = min(dp[i], 1 + dp[i - coin])
+                if 1 + dp[i - coin] < local_min:
+                    local_min = 1 + dp[i - coin]
+                    coin_used = coin
+        dp[i] = local_min
+        S[i] = coin_used
 
-    return dp[T] if dp[T] != float("inf") else -1
+    # print(dp)
+    # print(S)
+    
+    target = T
+    sol = []
+
+    while target > 0:
+        sol.append(S[target])
+        target -= S[target]
+
+    return dp[T] if dp[T] != float("inf") else -1, sol
 
 
-print(coin_change(T, coins))
+# print(coin_change(T, coins))
+
+nums = [10, 9, 2, 5, 3, 7, 101, 18]
+
+def lis(nums):
+    dp = [1] * len(nums)
+    dp[len(nums) - 1] = 1
+    for i in range(len(nums) - 2, -1, -1):
+        # How does this account for not choosing i?
+        dp[i] = max((1 + dp[j] for j in range(i + 1, len(nums)) if nums[j] > nums[i]), default=1)
+
+    print(dp)
+
+lis(nums)
