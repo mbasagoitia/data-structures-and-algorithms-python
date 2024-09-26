@@ -83,7 +83,7 @@ T(n) = 3T(n/2) + O(n^1)
 ## Strassen Multiplication Algorithm
 
 Multiplying 2 n by n matrices
-- Divies the matrices into 4 n/2 by n/2 matrices
+- Divides the matrices into 4 n/2 by n/2 matrices
 - Uses 7 multiplications to solve the problem
 - T(n) = 7T(n/2) + O(n^2) because adding matrices takes n^2 time
 - a = 7, b = 2, c = 2; log base 2 7 = 2.7....
