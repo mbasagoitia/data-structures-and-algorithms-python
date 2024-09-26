@@ -103,15 +103,25 @@ def coin_change(T, coins):
 
 # print(coin_change(T, coins))
 
+# Recurrence: dp[i] = max(1,1+dp[j]) for all j>i where nums[j]>nums[i]
+
 nums = [10, 9, 2, 5, 3, 7, 101, 18]
 
 def lis(nums):
     dp = [1] * len(nums)
-    dp[len(nums) - 1] = 1
-    for i in range(len(nums) - 2, -1, -1):
-        # How does this account for not choosing i?
-        dp[i] = max((1 + dp[j] for j in range(i + 1, len(nums)) if nums[j] > nums[i]), default=1)
-
+    for i in range(len(nums) - 1, -1, -1):
+        max_value = 0
+        for j in range(i + 1, len(nums)):
+            if nums[i] < nums[j]:
+                if dp[j] > max_value:
+                    max_value = dp[j]
+        dp[i] = max_value + 1
+        
     print(dp)
 
-lis(nums)
+    return max(dp)
+
+# print(lis(nums))
+
+def lcs(s1, s2):
+    # See problem statement
