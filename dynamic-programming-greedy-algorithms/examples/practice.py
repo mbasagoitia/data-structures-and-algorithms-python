@@ -144,9 +144,46 @@ def binary_search(arr, target, left, right):
 
 arr = [2, 4, 1, 7, 5]
 
-def min_max(arr):
-    if len(arr) == 1:
-        return arr[0], arr[0]
-    if (len(arr)) == 2:
-        return min(arr), max(arr)
+def find_min_max(arr, left, right):
+    # Base case: If the array contains only one element
+    if left == right:
+        return arr[left], arr[left]
+    
+    # Base case: If the array contains two elements
+    if right == left + 1:
+        if arr[left] < arr[right]:
+            return arr[left], arr[right]
+        else:
+            return arr[right], arr[left]
+    
+    # Divide the array into two halves
+    mid = (left + right) // 2
+    min1, max1 = find_min_max(arr, left, mid)
+    min2, max2 = find_min_max(arr, mid + 1, right)
+    
+    # Combine the results from both halves
+    overall_min = min(min1, min2)
+    overall_max = max(max1, max2)
+    
+    return overall_min, overall_max
+
+# Example usage:
+# arr = [2, 4, 1, 7, 5]
+min_value, max_value = find_min_max(arr, 0, len(arr) - 1)
+print(f"Minimum value: {min_value}")
+print(f"Maximum value: {max_value}")
+
+def find_sum(arr, left, right):
+    if left == right:
+        return arr[left]
+    if right == left + 1:
+        return arr[left] + arr[right]
+    mid = (left + right) // 2
+    
+    return find_sum(arr, left, mid) + find_sum(arr, mid + 1, right)
+
+arr = [1, 2, 3, 4, 5]
+# print(find_sum([1, 2, 3, 4, 5], 0, len(arr) - 1))
+
+def get_count(arr, left, right):
     
