@@ -123,5 +123,30 @@ def lis(nums):
 
 # print(lis(nums))
 
-def lcs(s1, s2):
-    # See problem statement
+# def lcs(s1, s2):
+#     # See problem statement
+
+arr = [1, 2, 3, 4, 5, 6, 7]
+target = 5
+
+def binary_search(arr, target, left, right):
+    if left > right:
+        return -1
+    mid = (left + right) // 2
+    if target == arr[mid]:
+        return mid
+    elif target > arr[mid]:
+        return binary_search(arr, target, mid + 1, right)
+    else:
+        return binary_search(arr, target, left, mid - 1)
+    
+# print(binary_search(arr, target, 0, len(arr) - 1))
+
+arr = [2, 4, 1, 7, 5]
+
+def min_max(arr):
+    if len(arr) == 1:
+        return arr[0], arr[0]
+    if (len(arr)) == 2:
+        return min(arr), max(arr)
+    
