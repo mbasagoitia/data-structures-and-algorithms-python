@@ -40,7 +40,7 @@ def min_cost_path(grid):
     for i in range(m-2, -1, -1):
         for j in range(n-2, -1, -1):
             dp[i][j] = grid[i][j] + min(dp[i+1][j], dp[i][j+1])
-    
+
     # Recover the solution
     sol = []
 
@@ -90,7 +90,7 @@ def coin_change(T, coins):
 
     # print(dp)
     # print(S)
-    
+
     target = T
     sol = []
 
@@ -116,7 +116,7 @@ def lis(nums):
                 if dp[j] > max_value:
                     max_value = dp[j]
         dp[i] = max_value + 1
-        
+
     print(dp)
 
     return max(dp)
@@ -139,7 +139,7 @@ def binary_search(arr, target, left, right):
         return binary_search(arr, target, mid + 1, right)
     else:
         return binary_search(arr, target, left, mid - 1)
-    
+
 # print(binary_search(arr, target, 0, len(arr) - 1))
 
 arr = [2, 4, 1, 7, 5]
@@ -148,23 +148,23 @@ def find_min_max(arr, left, right):
     # Base case: If the array contains only one element
     if left == right:
         return arr[left], arr[left]
-    
+
     # Base case: If the array contains two elements
     if right == left + 1:
         if arr[left] < arr[right]:
             return arr[left], arr[right]
         else:
             return arr[right], arr[left]
-    
+
     # Divide the array into two halves
     mid = (left + right) // 2
     min1, max1 = find_min_max(arr, left, mid)
     min2, max2 = find_min_max(arr, mid + 1, right)
-    
+
     # Combine the results from both halves
     overall_min = min(min1, min2)
     overall_max = max(max1, max2)
-    
+
     return overall_min, overall_max
 
 # Example usage:
@@ -179,11 +179,103 @@ def find_sum(arr, left, right):
     if right == left + 1:
         return arr[left] + arr[right]
     mid = (left + right) // 2
-    
+
     return find_sum(arr, left, mid) + find_sum(arr, mid + 1, right)
 
-arr = [1, 2, 3, 4, 5]
 # print(find_sum([1, 2, 3, 4, 5], 0, len(arr) - 1))
 
 def get_count(arr, left, right):
+    if left == right:
+        return 1
+    mid = (left + right) // 2
+
+    return get_count(arr, left, mid) + get_count(arr, mid + 1, right)
+
+# print(get_count(arr, 0, len(arr) - 1))
+
+def reverse_arr(arr, left, right):
+    if left >= right:
+        return arr
+    arr[left], arr[right] = arr[right], arr[left]
+    return reverse_arr(arr, left + 1, right - 1)
+
+# print(reverse_arr(arr, 0, len(arr) - 1))
+
+arr = [1, 2, 3, 131, 5, 6, 7]
+def find_max(arr, left, right):
+    if left == right:
+        return arr[left]
+    if right == left + 1:
+        if arr[left] > arr[right]:
+            return arr[left]
+        else:
+            return arr[right]
+    mid = (left + right) // 2
+    max_el = max(find_max(arr, left, mid), find_max(arr, mid + 1, right))
+    return max_el
+
+print(find_max(arr, 0, len(arr) - 1))
+
+def factorial(n):
+    if n == 0 or n == 1:
+        return 1
+    return n * factorial(n - 1)
+
+
+def fibonacci(n):
+    if n == 0:
+        return 0
+    if n == 1:
+        return 1
+    return fibonacci(n - 1) + fibonacci(n - 2)
+
+# print(fibonacci(5))
+
+def sum_of_digits(n):
+    if n < 10:
+        return n
+    return n % 10 + sum_of_digits(n // 10)
+
+# print(sum_of_digits(325))
+
+def is_palindrome(s, left, right):
+    if left == right:
+        return True
+    if right == left + 1:
+        if s[left] == s[right]:
+            return True
+        else:
+            return False
+    if s[left] == s[right]:
+        return is_palindrome(s, left + 1, right - 1)
+    else:
+        return False
     
+s = "racecar"
+# print(is_palindrome(s, 0, len(s) - 1))
+
+def calculate_power(x, n):
+    if n == 0:
+        return 1
+    
+    if n % 2 == 0:
+        return calculate_power(x, n//2) ** 2
+    else:
+        return x * calculate_power(x, n - 1)
+
+# print(calculate_power(3, 4))
+
+def merge_sorted_arrs(arr1, arr2):
+    if len(arr1) == 0:
+        return arr2
+    if len(arr2) == 0:
+        return arr1
+    merged = []
+    if arr1[0] < arr2[0]:
+        merged = [arr1[0]] + merge_sorted_arrs(arr1[1:], arr2)
+    else:
+        merged = [arr2[0]] + merge_sorted_arrs(arr1, arr2[1:])
+
+    return merged
+
+print(merge_sorted_arrs([1, 2, 5], [4, 6, 9]))
