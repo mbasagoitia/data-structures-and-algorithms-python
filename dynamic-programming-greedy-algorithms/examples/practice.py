@@ -278,4 +278,34 @@ def merge_sorted_arrs(arr1, arr2):
 
     return merged
 
-print(merge_sorted_arrs([1, 2, 5], [4, 6, 9]))
+# print(merge_sorted_arrs([1, 2, 5], [4, 6, 9]))
+
+def unique_paths(m, n):
+    if m == 1 or n == 1:
+        return 1
+    return unique_paths(m, n - 1) + unique_paths(m - 1, n)
+
+# print(unique_paths(3, 5))
+
+def find_sum(arr, left, right):
+    if left == right:
+        return arr[left]
+    mid = (left + right) // 2
+    return find_sum(arr, left, mid) + find_sum(arr, mid + 1, right)
+
+arr3 = [1, 2, 4, 3]
+
+# print(find_sum(arr3, 0, len(arr3) - 1))
+
+def greater_than(arr, value, left, right):
+    if left == right:
+        if arr[left] > value:
+            return 1
+        else:
+            return 0
+    
+    mid = (left + right) // 2
+    return greater_than(arr, value, left, mid) + greater_than(arr, value, mid + 1, right)
+
+arr4 = [5, 2, 7, 9, 10]
+print(greater_than(arr4, 1, 0, len(arr4) - 1))
