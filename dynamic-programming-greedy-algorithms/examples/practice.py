@@ -307,5 +307,43 @@ def greater_than(arr, value, left, right):
     mid = (left + right) // 2
     return greater_than(arr, value, left, mid) + greater_than(arr, value, mid + 1, right)
 
-arr4 = [5, 2, 7, 9, 10]
-print(greater_than(arr4, 1, 0, len(arr4) - 1))
+arr4 = [5, 2, 7, 9, 10, 23, 6, 1, 655, 3]
+# print(greater_than(arr4, 1, 0, len(arr4) - 1))
+
+def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    mid = len(arr) // 2
+
+    return merge(merge_sort(arr[:mid]), merge_sort(arr[mid:]))
+
+def merge(left, right):
+    merged = []
+    i = 0
+    j = 0
+
+    while i < len(left) and j < len(right):
+        if left[i] < right[j]:
+            merged.append(left[i])
+            i += 1
+        else:
+            merged.append(right[j])
+            j += 1
+    
+    while i < len(left):
+        merged.append(left[i])
+        i += 1
+    
+    while j < len(right):
+        merged.append(right[j])
+        j += 1
+    
+    return merged
+
+# print(merge_sort(arr4))
+
+def kth_smallest(arr, k):
+    if len(arr) <= 1:
+        return arr
+    
+    
