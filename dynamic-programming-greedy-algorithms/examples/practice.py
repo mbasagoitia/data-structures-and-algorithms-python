@@ -222,12 +222,12 @@ def factorial(n):
     return n * factorial(n - 1)
 
 
-def fibonacci(n):
-    if n == 0:
-        return 0
-    if n == 1:
-        return 1
-    return fibonacci(n - 1) + fibonacci(n - 2)
+# def fibonacci(n):
+#     if n == 0:
+#         return 0
+#     if n == 1:
+#         return 1
+#     return fibonacci(n - 1) + fibonacci(n - 2)
 
 # print(fibonacci(5))
 
@@ -346,4 +346,17 @@ def kth_smallest(arr, k):
     if len(arr) <= 1:
         return arr
     
-    
+    # Come back to this
+
+# Dynamic Programming Problems
+
+def fibonacci(n):
+    dp = [0] * (n + 1)
+    dp[0] = 0
+    dp[1] = 1
+
+    for i in range (2, n + 1):
+        dp[i] = dp[i - 1] + dp[i - 2]
+    return dp[n]
+
+print(fibonacci(9))
