@@ -1,30 +1,30 @@
-def karatsuba(x, y):
-    """Multiply two binary numbers using Karatsuba's algorithm."""
-    # Ensure x and y are strings of the same length
-    n = max(len(x), len(y))
-    if n % 2 != 0:
-        n += 1
-    x = x.zfill(n)
-    y = y.zfill(n)
+# def karatsuba(x, y):
+#     """Multiply two binary numbers using Karatsuba's algorithm."""
+#     # Ensure x and y are strings of the same length
+#     n = max(len(x), len(y))
+#     if n % 2 != 0:
+#         n += 1
+#     x = x.zfill(n)
+#     y = y.zfill(n)
     
-    # Base case
-    if len(x) == 1:
-        return str(int(x) * int(y))
+#     # Base case
+#     if len(x) == 1:
+#         return str(int(x) * int(y))
     
-    # Split the binary numbers
-    m = len(x) // 2
-    x1, x0 = x[:m], x[m:]
-    y1, y0 = y[:m], y[m:]
+#     # Split the binary numbers
+#     m = len(x) // 2
+#     x1, x0 = x[:m], x[m:]
+#     y1, y0 = y[:m], y[m:]
     
-    # Recursively calculate three products
-    z2 = karatsuba(x1, y1)
-    z0 = karatsuba(x0, y0)
-    z1 = karatsuba(binary_add(x1, x0), binary_add(y1, y0))
-    z1 = binary_subtract(z1, binary_add(z2, z0))
+#     # Recursively calculate three products
+#     z2 = karatsuba(x1, y1)
+#     z0 = karatsuba(x0, y0)
+#     z1 = karatsuba(binary_add(x1, x0), binary_add(y1, y0))
+#     z1 = binary_subtract(z1, binary_add(z2, z0))
     
-    # Combine the results
-    result = binary_add(binary_shift(z2, 2 * m), binary_add(binary_shift(z1, m), z0))
-    return result
+#     # Combine the results
+#     result = binary_add(binary_shift(z2, 2 * m), binary_add(binary_shift(z1, m), z0))
+    # return result
 
 def binary_add(a, b):
     """Add two binary numbers represented as strings."""
@@ -67,3 +67,6 @@ def binary_shift(a, n):
     """Shift binary number a to the left by n bits."""
     return a + '0' * n
 
+def karatsuba(x, y):
+    if len(x) < 2 or len(y) < 2:
+        return x * y
