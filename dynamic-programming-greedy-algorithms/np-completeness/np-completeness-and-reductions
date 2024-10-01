@@ -7,6 +7,7 @@ A reduction of problem A to problem B takes an input to problem A and converts i
 If A can be converted to B, what conclusions can we draw?
 
 - If there is a polynomial time reduction from A to B and B can be solved in polynomial time, then A can be solved in polynomial time.
+
 - If we can reduce from A to B and A cannot be solved in polynomial time, then B cannot be solved in polynomial time either.
 
 ## NP-Complete Problems

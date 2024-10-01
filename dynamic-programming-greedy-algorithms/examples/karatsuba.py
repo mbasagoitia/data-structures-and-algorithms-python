@@ -1,30 +1,30 @@
-# def karatsuba(x, y):
-#     """Multiply two binary numbers using Karatsuba's algorithm."""
-#     # Ensure x and y are strings of the same length
-#     n = max(len(x), len(y))
-#     if n % 2 != 0:
-#         n += 1
-#     x = x.zfill(n)
-#     y = y.zfill(n)
+def karatsuba(x, y):
+    """Multiply two binary numbers using Karatsuba's algorithm."""
+    # Ensure x and y are strings of the same length
+    n = max(len(x), len(y))
+    if n % 2 != 0:
+        n += 1
+    x = x.zfill(n)
+    y = y.zfill(n)
     
-#     # Base case
-#     if len(x) == 1:
-#         return str(int(x) * int(y))
+    # Base case
+    if len(x) == 1:
+        return str(int(x) * int(y))
     
-#     # Split the binary numbers
-#     m = len(x) // 2
-#     x1, x0 = x[:m], x[m:]
-#     y1, y0 = y[:m], y[m:]
+    # Split the binary numbers
+    m = len(x) // 2
+    x1, x0 = x[:m], x[m:]
+    y1, y0 = y[:m], y[m:]
     
-#     # Recursively calculate three products
-#     z2 = karatsuba(x1, y1)
-#     z0 = karatsuba(x0, y0)
-#     z1 = karatsuba(binary_add(x1, x0), binary_add(y1, y0))
-#     z1 = binary_subtract(z1, binary_add(z2, z0))
+    # Recursively calculate three products
+    z2 = karatsuba(x1, y1)
+    z0 = karatsuba(x0, y0)
+    z1 = karatsuba(binary_add(x1, x0), binary_add(y1, y0))
+    z1 = binary_subtract(z1, binary_add(z2, z0))
     
-#     # Combine the results
-#     result = binary_add(binary_shift(z2, 2 * m), binary_add(binary_shift(z1, m), z0))
-    # return result
+    # Combine the results
+    result = binary_add(binary_shift(z2, 2 * m), binary_add(binary_shift(z1, m), z0))
+    return result
 
 def binary_add(a, b):
     """Add two binary numbers represented as strings."""
@@ -68,5 +68,25 @@ def binary_shift(a, n):
     return a + '0' * n
 
 def karatsuba(x, y):
-    if len(x) < 2 or len(y) < 2:
+    # Base case for recursion: if numbers are small enough, multiply directly
+    if x < 10 or y < 10:
         return x * y
+    
+    # Calculate the size of the numbers
+    n = max(len(str(x)), len(str(y)))
+    m = n // 2
+    
+    # Split the numbers
+    a = x // 10**m
+    b = x % 10**m
+    c = y // 10**m
+    d = y % 10**m
+    
+    # Recursively compute the three products
+    r1 = karatsuba(a, c)
+    r2 = karatsuba(b, d)
+    r3 = karatsuba(a + b, c + d)
+    
+    # Combine the results
+    return r1 * 10**(2*m) + (r3 - r1 - r2) * 10**m + r2
+

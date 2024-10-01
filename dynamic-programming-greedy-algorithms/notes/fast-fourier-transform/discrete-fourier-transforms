@@ -32,13 +32,13 @@ Fourier Transform: Evaluate this polynomial for various roots of unity.
 
 a(wn^0), a(wn^1), .... a(wn^n-1) <- evaluating all of these will give you complex numbers [A1, A2 ... An-1]. We consider this the DFT of the sequence.
 
-Example: [1, -1, 1, -1] DFT -> [0, 0, 4, 0] *need to review how we got here*
+Example: [1, -1, 1, -1] DFT -> [0, 0, 4, 0]
 
 ## Recap of DFT
 
 Given a sequence of [a0, a1, a2, ... an-1], define the polynomial a(x) = a0 + a1x + a2x^2 .... an-1x^n-1. The DFT of this sequence is [A0, A1, A2 .... An-1] where Ak = a(wn^k) which is a polynomial evaluated at the kth root of unity, a0 + a1wn^k + a2wnk^2 ... an-1wn^k^n-1.
 
-Evaluate the polynomial a(x) on each root of unity.
+**Evaluate the polynomial a(x) on each root of unity.**
 
 ## Inverse DFT
 
