@@ -32,12 +32,14 @@ def max_subarray(A, l, u)
 
     # calculate midpoint
     m = (l + u) // 2
+
     # Find maximum from the left and right half recursively
     m1 = max_subarray(A, l, m)
     m2 = max_subarray(A, m + 1, u)
+    
     # find maximum from portion that crosses the midpoint
-    y1 = max_element(A, m + 1, u)
     x1 = min_element(A, l, m)
+    y1 = max_element(A, m + 1, u)
 
     return max(m1, m2, y1 - x1)
 

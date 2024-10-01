@@ -348,8 +348,6 @@ def kth_smallest(arr, k):
     
     # Come back to this
 
-# Dynamic Programming Problems
-
 def fibonacci(n):
     dp = [0] * (n + 1)
     dp[0] = 0
@@ -359,4 +357,57 @@ def fibonacci(n):
         dp[i] = dp[i - 1] + dp[i - 2]
     return dp[n]
 
-print(fibonacci(9))
+# print(fibonacci(9))
+
+arr5 = [4, 5, 19, 3, 1, 2, 4546, 6]
+
+def max_difference(arr, left, right):
+    if left == right:
+        return 0
+    if right == left + 1:
+        return max(0, arr[right] - arr[left])
+    
+    mid = (left + right) // 2
+
+    max_left = max_difference(arr, left, mid)
+    max_right = max_difference(arr, mid + 1, right)
+    max_crossing = max_elt(arr, mid + 1, right) - min_elt(arr, left, mid)
+
+    return max(max_left, max_right, max_crossing)
+
+def max_elt(arr, left, right):
+    maximum = float("-inf")
+    for i in range(left, right + 1):
+        if arr[i] > maximum:
+            maximum = arr[i]
+    return maximum
+
+def min_elt(arr, left, right):
+    minimum = float("inf")
+    for i in range(left, right + 1):
+        if arr[i] < minimum:
+            minimum = arr[i]
+    return minimum
+
+# print(max_difference(arr5, 0, len(arr5) - 1))
+
+def quick_sort(arr, left, right):
+    if left < right:
+        pivot_idx = partition(arr, left, right)
+    
+        quick_sort(arr, left, pivot_idx - 1)
+        quick_sort(arr, pivot_idx + 1, right)
+    
+def partition(arr, left, right):
+    pivot = arr[right]
+
+    i = left - 1
+
+    for j in range(left, right):
+        if arr[j] < pivot:
+            i += 1
+            arr[i], arr[j] = arr[j], arr[i]
+
+    arr[i + 1], arr[right] = arr[right], arr[i + 1]
+    
+    return i + 1
