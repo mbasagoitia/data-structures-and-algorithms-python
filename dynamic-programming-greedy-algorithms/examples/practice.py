@@ -68,43 +68,6 @@ def min_cost_path(grid):
 
 # print(min_cost_path(grid))
 
-T = 2534
-coins = [1, 2, 5, 10, 250]
-
-def coin_change(T, coins):
-    dp = [float("inf")] * (T + 1)
-    S = [None] * (T + 1)
-    S[0] = 0
-    dp[0] = 0
-
-    for i in range(1, T + 1):
-        local_min = float("inf")
-        coin_used = None
-        for coin in coins:
-            if i - coin >= 0:
-                if 1 + dp[i - coin] < local_min:
-                    local_min = 1 + dp[i - coin]
-                    coin_used = coin
-        dp[i] = local_min
-        S[i] = coin_used
-
-    # print(dp)
-    # print(S)
-
-    target = T
-    sol = []
-
-    while target > 0:
-        sol.append(S[target])
-        target -= S[target]
-
-    return dp[T] if dp[T] != float("inf") else -1, sol
-
-
-# print(coin_change(T, coins))
-
-# Recurrence: dp[i] = max(1,1+dp[j]) for all j>i where nums[j]>nums[i]
-
 nums = [10, 9, 2, 5, 3, 7, 101, 18]
 
 def lis(nums):
@@ -418,23 +381,86 @@ arr6 = [5, 3, 1, 6, 9, 10, 3, 1, 5, 2, 141]
 # quick_sort(arr6, 0, len(arr6) - 1)
 # print(arr6)
 
-prices = [1, 5, 8, 9]
-T = 4
+# prices = [1, 5, 8, 9]
+# T = 4
 
 def rod_cutting(T, prices):
     dp = [0] * (T + 1)
+    S = [0] * (T + 1)
 
     for i in range(1, T + 1):
         local_max = 0
+        best_rod_length = None
         for j in range(len(prices)):
             # If it's possible to make a cut of this length without going negative
             if i - (j + 1) >= 0:
                 if prices[j] + dp[i - (j + 1)] > local_max:
                     local_max = prices[j] + dp[i - (j + 1)]
+                    best_rod_length = j + 1
         dp[i] = local_max
-    
-    return dp[T]
+        S[i] = best_rod_length
+    print(S)
 
-print(rod_cutting(T, prices))
+    sol = []
+    rod_length = T
 
-# Now recover the solution
+    while rod_length > 0:
+        sol.append(S[rod_length])
+        rod_length -= S[rod_length]
+
+    return dp[T], sol
+
+# print(rod_cutting(T, prices))
+
+T = 4
+coins = [5, 10, 500]
+
+def coin_change(T, coins):
+    dp = [0] * (T + 1)
+    S = [0] * (T + 1)
+    # Consider all coin values up to the target
+    for i in range(1, T + 1):
+        local_min = float("inf")
+        best_coin = None
+        # Consider making change with each coin denomination and compare results
+        for j in range(len(coins)):
+            if i - coins[j] >= 0:
+                if dp[i - coins[j]] + 1 < local_min:
+                    local_min = 1 + dp[i - coins[j]]
+                    best_coin = coins[j]
+        dp[i] = local_min
+        S[i] = best_coin
+    sol = []
+    coin_value = T
+
+    while coin_value > 0:
+        if S[coin_value] is None:
+            break
+        if S[coin_value]:
+            sol.append(S[coin_value])
+            coin_value -= S[coin_value]
+
+    return dp[T] if dp[T] != float("inf") else -1, sol
+
+print(coin_change(T, coins))
+
+def lcs(s1, s2):
+    m = len(s1)
+    n = len(s2)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    S = [ ['' for j in range(n+1)] for i in range(m+1)]
+    print(S)
+
+    for i in range(m - 1, -1, -1):
+        for j in range(n - 1, -1, -1):
+            if s1[i] == s2[j]:
+                dp[i][j] = 1 + dp[i + 1][j + 1]
+                S[i][j] = s1[i] 
+            else:
+                dp[i][j] = max(dp[i + 1][j], dp[i][j + 1])
+    print(dp)
+    print(S)
+
+    return dp[0][0]
+
+# def lis(arr1, arr2):
