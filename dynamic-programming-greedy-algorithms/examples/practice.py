@@ -394,10 +394,10 @@ def min_elt(arr, left, right):
 def quick_sort(arr, left, right):
     if left < right:
         pivot_idx = partition(arr, left, right)
-    
+
         quick_sort(arr, left, pivot_idx - 1)
         quick_sort(arr, pivot_idx + 1, right)
-    
+
 def partition(arr, left, right):
     pivot = arr[right]
 
@@ -409,5 +409,32 @@ def partition(arr, left, right):
             arr[i], arr[j] = arr[j], arr[i]
 
     arr[i + 1], arr[right] = arr[right], arr[i + 1]
-    
+
     return i + 1
+
+arr6 = [5, 3, 1, 6, 9, 10, 3, 1, 5, 2, 141]
+
+# print(arr6)
+# quick_sort(arr6, 0, len(arr6) - 1)
+# print(arr6)
+
+prices = [1, 5, 8, 9]
+T = 4
+
+def rod_cutting(T, prices):
+    dp = [0] * (T + 1)
+
+    for i in range(1, T + 1):
+        local_max = 0
+        for j in range(len(prices)):
+            # If it's possible to make a cut of this length without going negative
+            if i - (j + 1) >= 0:
+                if prices[j] + dp[i - (j + 1)] > local_max:
+                    local_max = prices[j] + dp[i - (j + 1)]
+        dp[i] = local_max
+    
+    return dp[T]
+
+print(rod_cutting(T, prices))
+
+# Now recover the solution
