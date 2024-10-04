@@ -8,7 +8,7 @@ The goal is to send as much oil as possible from the source to the sink, subject
 - Can only be sent along the direction of the edges as they currently exist in the graph
 - Cannot send more flow along an edge than its capacity
 - Flow conservation: for any node, the total flow that comes into the node must equal the total flow that goes out of the node. The source and sink are exempt from this rule.
-    - The amount of flow that leaves the source should equal the amount of flow that enters the source
+    - The amount of flow that leaves the source should equal the amount of flow that enters the sink
 
 ## How to Make this into a Linear Program
 
@@ -19,7 +19,7 @@ Decision variables:
 
 Objective function:
 - Maximum of total flow leaving the source (same as total flow entering the sink)
-- Max x12 + x24; where these are the two edges leaving the source node 1
+- Max x12 + x14; where these are the two edges leaving the source node 1
 
 Constraints:
 - x12 >= 0
@@ -30,4 +30,4 @@ Constraints:
 
 The solution will always be feasible (you can send 0 flow) and always bounded as long as you have bounded capacity along every edge.
 
-A LP solver would typically be slower than a dedication network flow solver with dedicated algorithms, but it is possible to solve problems like this with linear programs.
+A LP solver would typically be slower than a dedicated network flow solver with dedicated algorithms, but it is possible to solve problems like this with linear programs.

@@ -12,7 +12,7 @@ In what order do we visit the vertices in S?
 
 Example:
 
-minCostTSPTour(5) = min(minCostPath({2, 3, 4}, 5) + C5,1, minCostPath({2, 3, 5}, 4) + C4, 1, etc.)
+minCostTSPTour(5) = min(minCostPath({2, 3, 4}, 5) + C5, 1, minCostPath({2, 3, 5}, 4) + C4, 1, etc.)
 - This can be written as a loop through different values of e
 
 The above is trying to find the minimum of different calculation of minCostPath for different ending vertices. It considers the cost of different subsets in the graph and adds the edge from the ending vertex to the starting vertex.
@@ -38,7 +38,7 @@ Base cases:
 - The subset contains 1 vertex: mcp({i}, e) -> mcp = ci1 + cie (only one way to traverse; cost of start to i + i to e)
 - The subset is empty: mcp({}, e) = c1e (cost from start to end)
 
-To construct the TSP tour, record the vertetx at each step that gives you the minimum cost path.
+To construct the TSP tour, record the vertex at each step that gives you the minimum cost path.
 
 ### Time Complexity
 

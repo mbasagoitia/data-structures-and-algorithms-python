@@ -410,9 +410,10 @@ def rod_cutting(T, prices):
 
     return dp[T], sol
 
-# print(rod_cutting(T, prices))
+# print(rod_cutting(T, prices))3
 
-T = 4
+T = 34
+
 coins = [5, 10, 500]
 
 def coin_change(T, coins):
@@ -443,24 +444,3 @@ def coin_change(T, coins):
     return dp[T] if dp[T] != float("inf") else -1, sol
 
 print(coin_change(T, coins))
-
-def lcs(s1, s2):
-    m = len(s1)
-    n = len(s2)
-    dp = [[0] * (n + 1) for _ in range(m + 1)]
-    S = [ ['' for j in range(n+1)] for i in range(m+1)]
-    print(S)
-
-    for i in range(m - 1, -1, -1):
-        for j in range(n - 1, -1, -1):
-            if s1[i] == s2[j]:
-                dp[i][j] = 1 + dp[i + 1][j + 1]
-                S[i][j] = s1[i] 
-            else:
-                dp[i][j] = max(dp[i + 1][j], dp[i][j + 1])
-    print(dp)
-    print(S)
-
-    return dp[0][0]
-
-# def lis(arr1, arr2):
