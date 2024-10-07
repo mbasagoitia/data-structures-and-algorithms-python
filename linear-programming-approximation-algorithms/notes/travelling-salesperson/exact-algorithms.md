@@ -65,14 +65,16 @@ Constraints:
 
 Objective function: Minimize the summation of Cij * xi->j for all decision variables xi ->j where Cij is the cost of going from i to j
 
-In the worst case, this approach is slower than Held-Karp, but may work faster in practice
+In the worst case, this approach is slower than Held-Karp, but may work faster in practice. It also works for asymmetric TSP problems!
 
 ## Subtours and Subtour Elimination Formulation
 
 In this formulation, we will regard xi->j and xj->i as the same
 
 - Sum of all edges either leaving or entering i = 2 (one leaving, one entering; # of tour edges incident on a vertex)
+
 Subtour elimination constraints:
+
 - For every S which is a potential subtour of 1 ... n, the summation of all edges where i belongs to S and j does not belong to S (potential edges in the tour), the number of edges must be >= 2
 
 This approach doesn't use timestamp decision variables, but adds 2^n constraints.
