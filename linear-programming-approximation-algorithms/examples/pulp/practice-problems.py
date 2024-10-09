@@ -1,3 +1,5 @@
+from pulp import *
+
 # Problem 1
 
 # Maximize Z = 3x + 2y
@@ -8,8 +10,6 @@
 # x <= 2
 # y <= 3
 # x,y >= 0
-
-from pulp import *
 
 # math_problem = LpProblem("math_problem", LpMaximize)
 
@@ -371,17 +371,45 @@ from pulp import *
 
 # 0/1 Knapsack
 
-weights = [1, 2, 3, 4]
-values = [1, 6, 10, 12]
+# weights = [2, 3, 4, 5, 9, 7, 3, 6, 8, 5]
+# values = [3, 4, 8, 8, 10, 7, 4, 9, 11, 7]
 
-W = 5
+# W = 20
 
-knapsack = LpProblem("knapsack", LpMaximize)
+# knapsack = LpProblem("knapsack", LpMaximize)
 
-decision_vars = [LpVariable(f'x_{i}', cat="Binary") for i in range(len(weights))]
+# decision_vars = [LpVariable(f'x_{i}', cat="Binary") for i in range(len(weights))]
 
-knapsack += lpSum(decision_vars[i] * values[i] for i in range(len(values)))
+# knapsack += lpSum(decision_vars[i] * values[i] for i in range(len(values)))
 
-knapsack += lpSum(decision_vars[i] * weights[i] for i in range(len(weights))) <= W
+# knapsack += lpSum(decision_vars[i] * weights[i] for i in range(len(weights))) <= W
 
-# Finish and extract solution
+# knapsack.solve()
+# print(constants.LpStatus[knapsack.status])
+# sols = []
+# for i in range(len(decision_vars)):
+#     if decision_vars[i].varValue == 1.0:
+#         sols.append(i + 1)
+# print(sols, knapsack.objective.value())
+
+weights = [2, 3, 4, 5, 9, 7, 3, 6, 8, 5]
+values = [3, 4, 8, 8, 10, 7, 4, 9, 11, 7]
+
+W = 20
+
+fractional_knapsack = LpProblem("fractional_knapsack", LpMaximize)
+
+decision_vars = [LpVariable(f'x_{i}', 0, 1, cat="Continuous") for i in range(len(weights))]
+
+fractional_knapsack += lpSum(decision_vars[i] * values[i] for i in range(len(values)))
+
+fractional_knapsack += lpSum(decision_vars[i] * weights[i] for i in range(len(weights))) <= W
+
+fractional_knapsack.solve()
+print(constants.LpStatus[fractional_knapsack.status])
+print([v.varValue for v in decision_vars])
+sols = []
+for i in range(len(decision_vars)):
+    if decision_vars[i].varValue > 0:
+        sols.append(i)
+print(sols, fractional_knapsack.objective.value())
