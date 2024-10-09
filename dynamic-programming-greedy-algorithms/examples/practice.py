@@ -443,4 +443,124 @@ def coin_change(T, coins):
 
     return dp[T] if dp[T] != float("inf") else -1, sol
 
-print(coin_change(T, coins))
+# print(coin_change(T, coins))
+
+weights = [2, 3, 4, 5, 9, 7, 3, 6, 8, 5]
+values = [3, 4, 8, 8, 10, 7, 4, 9, 11, 7]
+W = 20
+
+n = len(values)
+
+def knapsack(weights, values, W):
+    dp = [[0 for _ in range(W + 1)] for _ in range(n + 1)]
+    for j in range(1, n + 1):
+        for w in range(W + 1):
+            if weights[j - 1] <= w:
+                dp[j][w] = max(dp[j - 1][w], dp[j - 1][w - weights[j - 1]] + values[j - 1])
+            else:
+                dp[j][w] = dp[j-1][w]
+
+    w = W
+    included_items = []
+    for j in range(n, 0, -1):
+        if dp[j][w] != dp[j - 1][w]:
+            included_items.append(j - 1)
+            w -= weights[j - 1]
+
+    return dp[n - 1][W], included_items
+
+# print(knapsack(weights, values, W))
+
+def lcs(str1, str2):
+    
+    m = len(str1)
+    n = len(str2)
+    
+    dp = [[0 for _ in range(n + 1)] for _ in range(m + 1)]
+    
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if str1[i - 1] == str2[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1] + 1
+            else:
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+    
+    return dp[m][n]
+
+# print(lcs("he", "hello"))
+
+def lis(arr):
+
+    n = len(arr)
+    
+    dp = [1] * n
+
+    for i in range(1, n):
+        for j in range(i):
+            if arr[j] < arr[i]:
+                dp[i] = max(dp[i], dp[j] + 1)
+
+    return max(dp)
+
+arr = [10, 22, 9, 33, 21, 50, 41, 60]
+print("Length of LIS is:", lis(arr))
+
+# Now recover solution for lcs and lis
+
+def edit_distance(str1, str2):
+    m = len(str1)
+    n = len(str2)
+    
+    # Create a 2D DP array of size (m+1) x (n+1)
+    dp = [[0 for _ in range(n + 1)] for _ in range(m + 1)]
+    
+    # Initialize the base cases
+    for i in range(m + 1):
+        dp[i][0] = i  # Deleting all characters from str1 to match an empty str2
+    for j in range(n + 1):
+        dp[0][j] = j  # Inserting all characters into an empty str1 to match str2
+    
+    # Fill the dp array
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if str1[i - 1] == str2[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1]  # No change needed if characters are the same
+            else:
+                dp[i][j] = min(dp[i - 1][j],  # Deletion
+                               dp[i][j - 1],  # Insertion
+                               dp[i - 1][j - 1]) + 1  # Substitution
+    
+    # The final answer will be in dp[m][n]
+    return dp[m][n]
+
+# Example usage:
+str1 = "horse"
+str2 = "ros"
+print("Minimum edit distance:", edit_distance(str1, str2))
+
+def longest_palindromic_subsequence(s):
+    n = len(s)
+    
+    # Create a 2D DP array of size (n x n)
+    dp = [[0 for _ in range(n)] for _ in range(n)]
+    
+    # Every single character is a palindrome of length 1
+    for i in range(n):
+        dp[i][i] = 1
+    
+    # Build the DP table
+    for length in range(2, n + 1):  # Consider substrings of increasing length
+        for i in range(n - length + 1):
+            j = i + length - 1  # Ending index of the substring
+            
+            if s[i] == s[j]:  # If the characters match, they can form a palindrome
+                dp[i][j] = dp[i + 1][j - 1] + 2
+            else:  # Otherwise, we take the maximum between ignoring either character
+                dp[i][j] = max(dp[i + 1][j], dp[i][j - 1])
+    
+    # The final answer is in dp[0][n-1], representing the longest palindromic subsequence in s
+    return dp[0][n - 1]
+
+# Example usage:
+s = "bbbab"
+print("Length of longest palindromic subsequence:", longest_palindromic_subsequence(s))
