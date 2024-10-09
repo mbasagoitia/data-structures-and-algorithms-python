@@ -392,24 +392,51 @@ from pulp import *
 #         sols.append(i + 1)
 # print(sols, knapsack.objective.value())
 
+# weights = [2, 3, 4, 5, 9, 7, 3, 6, 8, 5]
+# values = [3, 4, 8, 8, 10, 7, 4, 9, 11, 7]
+
+# W = 20
+
+# fractional_knapsack = LpProblem("fractional_knapsack", LpMaximize)
+
+# decision_vars = [LpVariable(f'x_{i}', 0, 1, cat="Continuous") for i in range(len(weights))]
+
+# fractional_knapsack += lpSum(decision_vars[i] * values[i] for i in range(len(values)))
+
+# fractional_knapsack += lpSum(decision_vars[i] * weights[i] for i in range(len(weights))) <= W
+
+# fractional_knapsack.solve()
+# print(constants.LpStatus[fractional_knapsack.status])
+# print([v.varValue for v in decision_vars])
+
+# print([(i, decision_vars[i].varValue) for i in range(len(decision_vars)) if decision_vars[i].varValue != 0], fractional_knapsack.objective.value())
+
 weights = [2, 3, 4, 5, 9, 7, 3, 6, 8, 5]
 values = [3, 4, 8, 8, 10, 7, 4, 9, 11, 7]
-
 W = 20
 
-fractional_knapsack = LpProblem("fractional_knapsack", LpMaximize)
+n = len(values)
+# T[j, w] = max(T[j - 1, w], T[j - 1, w - wj] + vj)
 
-decision_vars = [LpVariable(f'x_{i}', 0, 1, cat="Continuous") for i in range(len(weights))]
+# dp[i][w] represents the maximum value that can be obtained with the first i items and a weight capacity of w.
+dp = [[0 for _ in range(W + 1)] for _ in range(n + 1)] 
 
-fractional_knapsack += lpSum(decision_vars[i] * values[i] for i in range(len(values)))
+for j in range(1, n + 1):
+    for w in range(W + 1):
+        if weights[j - 1] <= w:  # If the item can be included
+            dp[j][w] = max(dp[j - 1][w], dp[j - 1][w - weights[j - 1]] + values[j - 1])  # Include or exclude the item
+        else:
+            dp[j][w] = dp[j - 1][w]
+print("Maximum value:", dp[n - 1][W])
 
-fractional_knapsack += lpSum(decision_vars[i] * weights[i] for i in range(len(weights))) <= W
+w = W
+included_items = []
+for j in range(n, 0, -1):
+    if dp[j][w] != dp[j - 1][w]:  # If the value is different, the item was included
+        included_items.append(j - 1)
+        w -= weights[j - 1]  # Reduce the remaining weight
 
-fractional_knapsack.solve()
-print(constants.LpStatus[fractional_knapsack.status])
-print([v.varValue for v in decision_vars])
-sols = []
-for i in range(len(decision_vars)):
-    if decision_vars[i].varValue > 0:
-        sols.append(i)
-print(sols, fractional_knapsack.objective.value())
+print("Included items:", included_items)
+
+# Rewrite this and do it again!
+# Also lcs/lis/max sub

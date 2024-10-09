@@ -1,4 +1,4 @@
-# Knapsack Problem
+    # Knapsack Problem
 
 Given a knapsack with weight capacity W and a set of items i1 ... ik of weights w and values v, maximize the value of the items placed in the knapsack, ensuring that their weights do not exceed the capacity of the knapsack.
 
