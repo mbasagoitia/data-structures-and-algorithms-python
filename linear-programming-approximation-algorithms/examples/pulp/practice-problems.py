@@ -411,33 +411,120 @@ from pulp import *
 
 # print([(i, decision_vars[i].varValue) for i in range(len(decision_vars)) if decision_vars[i].varValue != 0], fractional_knapsack.objective.value())
 
-weights = [2, 3, 4, 5, 9, 7, 3, 6, 8, 5]
-values = [3, 4, 8, 8, 10, 7, 4, 9, 11, 7]
-W = 20
+# weights = [2, 3, 4, 5, 9, 7, 3, 6, 8, 5]
+# values = [3, 4, 8, 8, 10, 7, 4, 9, 11, 7]
+# W = 20
 
-n = len(values)
+# n = len(values)
 # T[j, w] = max(T[j - 1, w], T[j - 1, w - wj] + vj)
 
 # dp[i][w] represents the maximum value that can be obtained with the first i items and a weight capacity of w.
-dp = [[0 for _ in range(W + 1)] for _ in range(n + 1)] 
+# dp = [[0 for _ in range(W + 1)] for _ in range(n + 1)] 
 
-for j in range(1, n + 1):
-    for w in range(W + 1):
-        if weights[j - 1] <= w:  # If the item can be included
-            dp[j][w] = max(dp[j - 1][w], dp[j - 1][w - weights[j - 1]] + values[j - 1])  # Include or exclude the item
-        else:
-            dp[j][w] = dp[j - 1][w]
-print("Maximum value:", dp[n - 1][W])
+# for j in range(1, n + 1):
+#     for w in range(W + 1):
+#         if weights[j - 1] <= w:  # If the item can be included
+#             dp[j][w] = max(dp[j - 1][w], dp[j - 1][w - weights[j - 1]] + values[j - 1])  # Include or exclude the item
+#         else:
+#             dp[j][w] = dp[j - 1][w]
+# print("Maximum value:", dp[n - 1][W])
 
-w = W
-included_items = []
-for j in range(n, 0, -1):
-    if dp[j][w] != dp[j - 1][w]:  # If the value is different, the item was included
-        included_items.append(j - 1)
-        w -= weights[j - 1]  # Reduce the remaining weight
+# w = W
+# included_items = []
+# for j in range(n, 0, -1):
+#     if dp[j][w] != dp[j - 1][w]:  # If the value is different, the item was included
+#         included_items.append(j - 1)
+#         w -= weights[j - 1]  # Reduce the remaining weight
 
-print("Included items:", included_items)
+# print("Included items:", included_items)
 
-# Rewrite this and do it again!
-# Also lcs/lis/max sub
+# m = 4
+# n = 3
+# list_c = [1, 1, 1]
+# list_a = [ [2, 1, 2], [1, 0, 0], [0, 1, 0], [0, 0, -1]]
+# list_b = [5, 7, 9, 4]
 
+# decision_vars = [LpVariable(f'x{i}') for i in range(n)]
+
+# general_prob = LpProblem("general_prob", LpMaximize)
+
+# general_prob += lpSum(decision_vars[i] * list_c[i] for i in range (n))
+
+# for i in range (m):
+#     general_prob += lpSum(list_a[i][j] * decision_vars[j] for j in range (n)) <= list_b[i]
+
+# general_prob.solve()
+# print(constants.LpStatus[general_prob.status])
+# print([v.varValue for v in decision_vars])
+# print(general_prob.objective.value)
+
+# source_coords = [ (1,5), (4,1), (5,5) ]
+# source_weights = [9, 4, 5]
+# dest_coords = [ (2,2), (6,6) ]
+# dest_weights = [9, 9]
+# n = 3
+# m = 2
+
+from math import sqrt
+# def calculate_distance(a, b): 
+#     (xa, ya) = a
+#     (xb, yb) = b
+#     return sqrt( (xa- xb)**2 + (ya - yb)**2)
+
+# transport_problem = LpProblem("transport_problem", LpMinimize)
+
+# decision_vars = [[LpVariable(f'x_{i}_{j}', 0) for j in range(m)] for i in range(n)]
+
+# sum = 0
+# for i in range(n):
+#     for j in range(m):
+#         sum += calculate_distance(source_coords[i], dest_coords[j]) * decision_vars[i][j]
+
+# transport_problem += sum
+
+# for i in range(n):
+#     transport_problem += lpSum(decision_vars[i][j] for j in range(m)) == source_weights[i]
+
+# for j in range(m):
+#     transport_problem += lpSum(decision_vars[i][j] for i in range(n)) == dest_weights[j]
+
+# transport_problem.solve()
+# sol = [[decision_vars[i][j].varValue for j in range(m)] for i in range(n)]
+# print(constants.LpStatus[transport_problem.status])
+# print(sol)
+# print(transport_problem.objective.value())
+
+# location_coords = [(1,2), (3, 5), (4, 7), (5, 1), (6, 8), (7, 9), (8,14), (13,6)]
+# R = 5
+
+# def euclidean_distance(location_coords, i, j):
+#     assert 0 <= i and i < len(location_coords)
+#     assert 0 <= j and j < len(location_coords)
+#     if i == j: 
+#         return 0.0
+#     (xi, yi) = location_coords[i] # unpack coordinate
+#     (xj, yj) = location_coords[j]
+#     return sqrt( (xj - xi)**2 + (yj - yi)**2 )
+
+# distance_problem = LpProblem("distance_problem", LpMinimize)
+
+# decision_vars = [LpVariable(f'x{i}', 0, 1, cat="Binary") for i in range(len(location_coords))]
+
+# distance_problem += lpSum(decision_vars)
+
+# valid_distances = {i: [] for i in range(len(location_coords))}
+
+# for i in range(len(location_coords)):
+#     for j in range(len(location_coords)):
+#         if euclidean_distance(location_coords, i, j) <= R:
+#             valid_distances[i].append(location_coords[j])
+
+# print(valid_distances)
+
+# for warehouse in valid_distances:
+#     distance_problem += lpSum(decision_vars[location_coords.index(location)] for location in valid_distances[warehouse]) >= 1
+
+# distance_problem.solve()
+# print(constants.LpStatus[distance_problem.status])
+# print([v.varValue for v in decision_vars])
+# print(distance_problem.objective.value())
