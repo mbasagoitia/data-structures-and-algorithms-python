@@ -528,3 +528,175 @@ from math import sqrt
 # print(constants.LpStatus[distance_problem.status])
 # print([v.varValue for v in decision_vars])
 # print(distance_problem.objective.value())
+
+# sc_problem = LpProblem("supply_chain_problem", LpMinimize)
+
+# # Number of factories, warehouses, and retail outlets
+# n = 3
+# m = 2
+# k = 3
+
+# # Production costs per unit for each factory
+# production_costs = [4, 5, 6]  # Factory 1, Factory 2, Factory 3
+
+# # Production capacities for each factory
+# production_capacities = [500, 600, 400]  # Factory 1, Factory 2, Factory 3
+
+# # Storage costs per unit for each warehouse
+# storage_costs = [2, 3]  # Warehouse 1, Warehouse 2
+
+# # Storage capacities for each warehouse
+# storage_capacities = [700, 800]  # Warehouse 1, Warehouse 2
+
+# # Demand at each retail outlet
+# retail_demands = [400, 500, 300]  # Retail Outlet 1, Retail Outlet 2, Retail Outlet 3
+
+# # Transportation costs from factories to warehouses
+# factory_to_warehouse_costs = [
+#     [3, 5],  # Factory 1 to Warehouse 1, Factory 1 to Warehouse 2
+#     [4, 6],  # Factory 2 to Warehouse 1, Factory 2 to Warehouse 2
+#     [2, 4],  # Factory 3 to Warehouse 1, Factory 3 to Warehouse 2
+# ]
+
+# # Transportation costs from warehouses to retail outlets
+# warehouse_to_retail_costs = [
+#     [5, 3, 4],  # Warehouse 1 to Retail Outlet 1, Retail Outlet 2, Retail Outlet 3
+#     [6, 4, 3],  # Warehouse 2 to Retail Outlet 1, Retail Outlet 2, Retail Outlet 3
+# ]
+
+# # Decision variables: factory to warehouse
+# factory_to_warehouse_decision_vars = [[LpVariable(f'x{i}{j}', 0) for j in range(m)] for i in range(n)]
+
+# # Decision variables: warehouse to retail outlet
+# warehouse_to_retail_decision_vars = [[LpVariable(f'y{j}{k_idx}', 0) for k_idx in range(k)] for j in range(m)]
+
+# # Minimize all costs: production, storage, transport from factories to warehouses and warehouses to retail outlets
+# factory_costs = 0
+# for i in range(n):
+#     for j in range(m):
+#         factory_costs += factory_to_warehouse_decision_vars[i][j] * (production_costs[i] + factory_to_warehouse_costs[i][j])
+
+# warehouse_costs = 0
+# for j in range(m):
+#     for k_idx in range(k):
+#         warehouse_costs += warehouse_to_retail_decision_vars[j][k_idx] * (storage_costs[j] + warehouse_to_retail_costs[j][k_idx])
+
+# sc_problem += factory_costs + warehouse_costs
+
+# # All units leaving each factory must not exceed its capacity
+# for i in range(n):
+#     sc_problem += lpSum(factory_to_warehouse_decision_vars[i][j] for j in range(m)) <= production_capacities[i]
+
+# # All units entering each warehouse must not exceed its capacity
+# for j in range(m):
+#     sc_problem += lpSum(factory_to_warehouse_decision_vars[i][j] for i in range(n)) <= storage_capacities[j]
+
+# # Flow balance: number of units produced must equal number of units distributed to all retail locations
+# sc_problem += lpSum(factory_to_warehouse_decision_vars[i][j] for i in range(n) for j in range(m)) == \
+#               lpSum(warehouse_to_retail_decision_vars[j][k_idx] for j in range(m) for k_idx in range(k))
+
+# # Total units received by retail outlets should match demand
+# sc_problem += lpSum(warehouse_to_retail_decision_vars[j][k_idx] for j in range(m) for k_idx in range(k)) == lpSum(retail_demands)
+
+# # Solve the problem
+# sc_problem.solve()
+# sol1 = [[factory_to_warehouse_decision_vars[i][j].varValue for j in range(m)] for i in range(n)]
+# sol2 = [[warehouse_to_retail_decision_vars[j][k_idx].varValue for k_idx in range(k)] for j in range(m)]
+# print(sol1, sol2)
+# print(sc_problem.objective.value())
+
+def max_subarray(arr):
+    n = len(arr)
+    if n == 1:
+        return 0
+    
+    minSoFar = float("inf")
+    maxDiff = float("-inf")
+
+    for i in range(len(arr)):
+        minSoFar = min(minSoFar, arr[i])
+        maxDiff = max(maxDiff, arr[i] - minSoFar)
+    
+    return maxDiff
+
+def memoizeLSS(a):
+    T = {} # Initialize the memo table to empty dictionary
+    # Now populate the entries for the base case 
+    n = len(a)
+    for j in range(-1, n):
+        T[(n, j)] = 0 # i = n and j 
+    # Now fill out the table : figure out the two nested for loops
+    # It is important to also figure out the order in which you iterate the indices i and j
+    # Use the recurrence structure itself as a guide: see for instance that T[(i,j)] will depend on T[(i+1, j)]
+    # your code here
+    for i in range(n - 1, -1, -1):
+        for j in range(i - 1, -2, -1):
+            aj = a[j] if 0 <= j < n else None
+            if aj is None or abs(a[i] - aj) <= 1:
+                T[(i, j)] = max(T[(i + 1, i)] + 1, T[(i + 1, j)])
+            else:
+                T[(i, j)] = T[(i + 1, j)]
+
+    return T    
+
+def memoizeLSS(a):
+    T = {}  # Memoization table to store the lengths of subsequences
+    P = {}  # Table to store the previous index for reconstruction
+    n = len(a)
+    
+    # Base case: no subsequences can be formed if we are past the array (i = n)
+    for j in range(-1, n):
+        T[(n, j)] = 0  # No elements left, subsequence length is 0
+        P[(n, j)] = None  # No previous index
+    
+    # Fill out the table in reverse order, from i = n-1 to 0
+    for i in range(n - 1, -1, -1):
+        for j in range(i - 1, -2, -1):
+            aj = a[j] if 0 <= j < n else None
+            if aj is None or abs(a[i] - aj) <= 1:
+                # We can extend the subsequence by including a[i]
+                if T[(i + 1, i)] + 1 > T[(i + 1, j)]:
+                    T[(i, j)] = T[(i + 1, i)] + 1
+                    P[(i, j)] = i  # Track that we chose i to extend the subsequence
+                else:
+                    T[(i, j)] = T[(i + 1, j)]
+                    P[(i, j)] = j  # Track that we skipped i and continued from j
+            else:
+                # We cannot extend the subsequence, carry forward the previous value
+                T[(i, j)] = T[(i + 1, j)]
+                P[(i, j)] = j  # Track that we skipped i
+
+    return T, P
+
+def recoverLSS(a, T, P):
+    # Start with the best solution: max value in T[(0, -1)] (i.e., longest subsequence)
+    n = len(a)
+    subsequence = []
+    
+    # Start backtracking from T[(0, -1)], which represents the optimal solution
+    i, j = 0, -1
+    
+    while i < n:
+        # If P[(i, j)] gives us a new element i, we include a[i] in the subsequence
+        if P[(i, j)] is not None and P[(i, j)] != j:
+            subsequence.append(a[P[(i, j)]])
+            i = P[(i, j)] + 1  # Move to the next element
+            j = P[(i, j)]  # Update j to track the previous element in the subsequence
+        else:
+            i += 1  # Move to the next index
+
+    return subsequence
+
+def lis(arr):
+    n = len(arr)
+    T = [1 for _ in range(n)]
+    
+    for i in range(1, n):
+        for j in range(i):
+            if arr[i] > arr[j]:
+                T[i] = max(T[i], T[j] + 1)
+    
+    return max(T)
+
+
+print(lis([1, 2, 0, 2, 1, 12, 25]))
