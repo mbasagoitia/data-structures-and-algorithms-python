@@ -742,4 +742,4 @@ def getBestTargetSum(S, tgt):
                     res[(i, j)].append(S[i])
 
     return res[(0, tgt)]
->>>>>>> 7e494c77ec07b2ffafd0c6f27f53cc00219d40cf
+
