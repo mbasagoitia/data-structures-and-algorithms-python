@@ -605,98 +605,99 @@ from math import sqrt
 # print(sol1, sol2)
 # print(sc_problem.objective.value())
 
-def max_subarray(arr):
-    n = len(arr)
-    if n == 1:
-        return 0
+# def max_subarray(arr):
+#     n = len(arr)
+#     if n == 1:
+#         return 0
     
-    minSoFar = float("inf")
-    maxDiff = float("-inf")
+#     minSoFar = float("inf")
+#     maxDiff = float("-inf")
 
-    for i in range(len(arr)):
-        minSoFar = min(minSoFar, arr[i])
-        maxDiff = max(maxDiff, arr[i] - minSoFar)
+#     for i in range(len(arr)):
+#         minSoFar = min(minSoFar, arr[i])
+#         maxDiff = max(maxDiff, arr[i] - minSoFar)
     
-    return maxDiff
+#     return maxDiff
 
-def memoizeLSS(a):
-    T = {} # Initialize the memo table to empty dictionary
-    # Now populate the entries for the base case 
-    n = len(a)
-    for j in range(-1, n):
-        T[(n, j)] = 0 # i = n and j 
-    # Now fill out the table : figure out the two nested for loops
-    # It is important to also figure out the order in which you iterate the indices i and j
-    # Use the recurrence structure itself as a guide: see for instance that T[(i,j)] will depend on T[(i+1, j)]
-    # your code here
-    for i in range(n - 1, -1, -1):
-        for j in range(i - 1, -2, -1):
-            aj = a[j] if 0 <= j < n else None
-            if aj is None or abs(a[i] - aj) <= 1:
-                T[(i, j)] = max(T[(i + 1, i)] + 1, T[(i + 1, j)])
-            else:
-                T[(i, j)] = T[(i + 1, j)]
+# def memoizeLSS(a):
+#     T = {} # Initialize the memo table to empty dictionary
+#     # Now populate the entries for the base case 
+#     n = len(a)
+#     for j in range(-1, n):
+#         T[(n, j)] = 0 # i = n and j 
+#     # Now fill out the table : figure out the two nested for loops
+#     # It is important to also figure out the order in which you iterate the indices i and j
+#     # Use the recurrence structure itself as a guide: see for instance that T[(i,j)] will depend on T[(i+1, j)]
+#     # your code here
+#     for i in range(n - 1, -1, -1):
+#         for j in range(i - 1, -2, -1):
+#             aj = a[j] if 0 <= j < n else None
+#             if aj is None or abs(a[i] - aj) <= 1:
+#                 T[(i, j)] = max(T[(i + 1, i)] + 1, T[(i + 1, j)])
+#             else:
+#                 T[(i, j)] = T[(i + 1, j)]
 
-    return T    
+#     return T    
 
-def memoizeLSS(a):
-    T = {}  # Memoization table to store the lengths of subsequences
-    P = {}  # Table to store the previous index for reconstruction
-    n = len(a)
+# def memoizeLSS(a):
+#     T = {}  # Memoization table to store the lengths of subsequences
+#     P = {}  # Table to store the previous index for reconstruction
+#     n = len(a)
     
-    # Base case: no subsequences can be formed if we are past the array (i = n)
-    for j in range(-1, n):
-        T[(n, j)] = 0  # No elements left, subsequence length is 0
-        P[(n, j)] = None  # No previous index
+#     # Base case: no subsequences can be formed if we are past the array (i = n)
+#     for j in range(-1, n):
+#         T[(n, j)] = 0  # No elements left, subsequence length is 0
+#         P[(n, j)] = None  # No previous index
     
-    # Fill out the table in reverse order, from i = n-1 to 0
-    for i in range(n - 1, -1, -1):
-        for j in range(i - 1, -2, -1):
-            aj = a[j] if 0 <= j < n else None
-            if aj is None or abs(a[i] - aj) <= 1:
-                # We can extend the subsequence by including a[i]
-                if T[(i + 1, i)] + 1 > T[(i + 1, j)]:
-                    T[(i, j)] = T[(i + 1, i)] + 1
-                    P[(i, j)] = i  # Track that we chose i to extend the subsequence
-                else:
-                    T[(i, j)] = T[(i + 1, j)]
-                    P[(i, j)] = j  # Track that we skipped i and continued from j
-            else:
-                # We cannot extend the subsequence, carry forward the previous value
-                T[(i, j)] = T[(i + 1, j)]
-                P[(i, j)] = j  # Track that we skipped i
+#     # Fill out the table in reverse order, from i = n-1 to 0
+#     for i in range(n - 1, -1, -1):
+#         for j in range(i - 1, -2, -1):
+#             aj = a[j] if 0 <= j < n else None
+#             if aj is None or abs(a[i] - aj) <= 1:
+#                 # We can extend the subsequence by including a[i]
+#                 if T[(i + 1, i)] + 1 > T[(i + 1, j)]:
+#                     T[(i, j)] = T[(i + 1, i)] + 1
+#                     P[(i, j)] = i  # Track that we chose i to extend the subsequence
+#                 else:
+#                     T[(i, j)] = T[(i + 1, j)]
+#                     P[(i, j)] = j  # Track that we skipped i and continued from j
+#             else:
+#                 # We cannot extend the subsequence, carry forward the previous value
+#                 T[(i, j)] = T[(i + 1, j)]
+#                 P[(i, j)] = j  # Track that we skipped i
 
-    return T, P
+#     return T, P
 
-def recoverLSS(a, T, P):
-    # Start with the best solution: max value in T[(0, -1)] (i.e., longest subsequence)
-    n = len(a)
-    subsequence = []
+# def recoverLSS(a, T, P):
+#     # Start with the best solution: max value in T[(0, -1)] (i.e., longest subsequence)
+#     n = len(a)
+#     subsequence = []
     
-    # Start backtracking from T[(0, -1)], which represents the optimal solution
-    i, j = 0, -1
+#     # Start backtracking from T[(0, -1)], which represents the optimal solution
+#     i, j = 0, -1
     
-    while i < n:
-        # If P[(i, j)] gives us a new element i, we include a[i] in the subsequence
-        if P[(i, j)] is not None and P[(i, j)] != j:
-            subsequence.append(a[P[(i, j)]])
-            i = P[(i, j)] + 1  # Move to the next element
-            j = P[(i, j)]  # Update j to track the previous element in the subsequence
-        else:
-            i += 1  # Move to the next index
+#     while i < n:
+#         # If P[(i, j)] gives us a new element i, we include a[i] in the subsequence
+#         if P[(i, j)] is not None and P[(i, j)] != j:
+#             subsequence.append(a[P[(i, j)]])
+#             i = P[(i, j)] + 1  # Move to the next element
+#             j = P[(i, j)]  # Update j to track the previous element in the subsequence
+#         else:
+#             i += 1  # Move to the next index
 
-    return subsequence
+#     return subsequence
 
-def lis(arr):
-    n = len(arr)
-    T = [1 for _ in range(n)]
+# def lis(arr):
+#     n = len(arr)
+#     T = [1 for _ in range(n)]
     
-    for i in range(1, n):
-        for j in range(i):
-            if arr[i] > arr[j]:
-                T[i] = max(T[i], T[j] + 1)
+#     for i in range(1, n):
+#         for j in range(i):
+#             if arr[i] > arr[j]:
+#                 T[i] = max(T[i], T[j] + 1)
     
-    return max(T)
+#     return max(T)
 
 
-print(lis([1, 2, 0, 2, 1, 12, 25]))
+# print(lis([1, 2, 0, 2, 1, 12, 25]))
+
