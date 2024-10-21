@@ -701,3 +701,45 @@ from math import sqrt
 
 # print(lis([1, 2, 0, 2, 1, 12, 25]))
 
+def memoTargetSum(S, tgt):
+    k = len(S)
+    assert tgt >= 0
+    ## Fill in base case for T[(i,j)] where i == k
+    T = {} # Memo table initialized as empty dictionary
+    for j in range(tgt+1):
+        T[(k,j)] = j
+    # your code here
+    for i in range(k - 1, -1, -1):
+        for j in range(tgt + 1):
+            T[(i, j)] = T[(i + 1, j)]
+            
+            if j >= S[i]:
+                T[(i, j)] = min(T[(i, j)], T[(i + 1, j - S[i])])
+
+    
+    return T
+
+def getBestTargetSum(S, tgt):
+    k = len(S)
+    assert tgt >= 0
+    ## Fill in base case for T[(i,j)] where i == k
+    T = {} # Memo table initialized as empty dictionary
+    res = {}
+    
+    for j in range(tgt + 1):
+        T[(k, j)] = j
+        res[(k, j)] = []
+
+    for i in range(k - 1, -1, -1):
+        for j in range(tgt + 1):
+            T[(i, j)] = T[(i + 1, j)]
+            res[(i, j)] = res[(i + 1, j)].copy()
+
+            if j >= S[i]:
+                if T[(i + 1, j - S[i])] < T[(i, j)]:
+                    T[(i, j)] = T[(i + 1, j - S[i])]
+                    res[(i, j)] = res[(i + 1, j - S[i])].copy()
+                    res[(i, j)].append(S[i])
+
+    return res[(0, tgt)]
+>>>>>>> 7e494c77ec07b2ffafd0c6f27f53cc00219d40cf
