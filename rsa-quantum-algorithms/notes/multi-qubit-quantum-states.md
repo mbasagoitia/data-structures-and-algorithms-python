@@ -66,3 +66,22 @@ The Bell state can be created by starting with two qubits q1 and q2, and perform
 ## Creating Uniform Superposition
 
 It is standard to assume that all qubits are initialized to |0> before beginning any computation. To create a uniform superposition, apply H to each bit individually.
+
+## Quantum Parallelism
+
+Computing AND on a quantum computer is different from classical computation. Bits cannot be preserved or remembered after measurement, so we compute AND as a unitary operation in the following way:
+
+3 inputs: b1, b2, b3 where b1 and b2 come out unchanged, and b3 is the result register
+b3' (the result) = |b3 xor b1 AND b2>, or simply b1 AND b2 if b3 = |0>
+
+Quantum OR is computed in a very similar way, with a result bit b3 that is |b3 xor b1 OR b2>, or simply b1 OR b2 if b3 = |0>
+
+Quantum NOT already exists as the Pauli-X gate
+
+To perform quantum operations like we would with classical gates, we need to have "extra" result bits to store the result of computations.
+
+The important point is that if you pass a quantum version of a classical state to a superposition, the computation is applied to all pure states **in parallel.** 
+
+## No Cloning Theorem
+
+Cloning quantum states is not a unitary operation and is not possible.
