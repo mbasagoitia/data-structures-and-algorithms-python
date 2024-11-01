@@ -10,7 +10,7 @@ Assume that Bob and Alice share an entangled state of two qubits, represented by
 
 If either of them receive a 1, they apply a rotation of pi/8 (Alice) or -pi/8 (Bob) and measure the qubit and send back the result.
 
-If they receive a 0, they do not apply anyhing to the qubit, and they simply measure it and send back the result. 
+If they receive a 0, they do not apply anything to the qubit, and they simply measure it and send back the result. 
 
 Case 1: Both receive 0; chance of winning is 1
 Case 2: Either one receives a 1, but not both; chance of winning is about 0.85
