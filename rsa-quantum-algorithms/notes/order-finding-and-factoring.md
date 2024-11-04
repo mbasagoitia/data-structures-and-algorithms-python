@@ -10,7 +10,7 @@ Algorithm for factoring semiprime numbers of the form N = pq. Uses an operation 
 
 Steps:
 
-- Choose sum random number a that is relatively prime with N. Consider powers of a % N until you find a cycle such that a^i % N = a^i + j % N. We know that a^j % N = 1.
+- Choose some random number a that is relatively prime with N. Consider powers of a % N until you find a cycle such that a^i % N = a^i + j % N.
 
 The order r of a is defined as the smallest number r > 0 such that a^r % N = 1. Suppose that the order r of a is an even number and t is r/2. We can say that (a^t + 1)(a^t - 1) % N = 0. If GCD(a^t + 1, N) is not 0, we have found a factor p or q.
 
@@ -26,7 +26,7 @@ Steps:
 Choose a random  𝑎∈[2,𝑛−1] . If  𝐺𝐶𝐷(𝑎,𝑛)≠1  then we have found our prime factor!
 (Assume  𝐺𝐶𝐷(𝑎,𝑛)=1 ). Use quantum computer to find the order  𝑟  of  𝑎  modulo  𝑛 .
 If  𝑟  is even and  𝑎𝑟/2+1mod𝑛≠0 :
-Computing  𝐺𝐶𝐷(𝑎𝑟/2−1,𝑛)  will yield a factor of  𝑛 .
+Computing  𝐺𝐶𝐷(𝑎𝑟/2−1,𝑛)  will yield a factor of  𝑛.
 If condition in previous step fails, repeat step 1.
 
 ## Order Finding on a Quantum Computer
@@ -44,7 +44,7 @@ U runs through all possible combinations of states * a ^ 0 ... a ^ M - 1 % N
 
 In other words, it is the sum from j = 0 -> j = 2^(m - 1) ket j x (f(j)) (including the normalization factor).
 
-Then, a partial measurement of the result register is performed. The result register collapses to some value k.
+Then, a partial measurement of the result register is performed. The result register collapses to some value k which we can ignore.
 
 The original qubits will also collapse when this happens and yield some value x0 + alpha * r, which represents some x0 and some multiple of r in the periodic function. But we don't know what x0 is!
 
