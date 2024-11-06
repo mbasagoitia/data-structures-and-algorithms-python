@@ -33,6 +33,15 @@ In most modern computers, the CPU communicates with a series of caches, then the
 
 # Methods
 
+Find(k): check if a key exists in the tree; returns True or False; not the associated value
+
+Steps:
+
+- Search root for key
+- If not in root, find smallest ki that is > k and traverse the pointer to the left child of that ki; if such a ki doesn't exist, k is larger than all values in that node, so traverse the right subtree of km (last value in node)
+- Traverse this new node searching for k
+- Repeat until you find k or reach a leaf node
+
 Insert:
 
 - Start with the find operation, which will fail because you cannot have duplicate keys in a B-Tree, and you will end up in a leaf node. 
