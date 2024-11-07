@@ -31,9 +31,9 @@ Only one key can be found anywhere in the tree; no repeated keys.
 
 In most modern computers, the CPU communicates with a series of caches, then the RAM, then the disk. B-Trees store data on the disk. There is a fixed cost of reading the sector of the disk on which the data exists, and you can read large amounts of data (individual nodes are big, so it's worthwhile to store them on the disk).
 
-# Methods
+## Methods
 
-Find(k): check if a key exists in the tree; returns True or False; not the associated value
+Find(k): check if a key exists in the tree; returns True or False; not necessarily the associated value
 
 Steps:
 
