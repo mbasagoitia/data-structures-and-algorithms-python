@@ -48,6 +48,7 @@ Insert:
 - If the number of keys in the current leaf node is not at maximum (2d), simply insert the key at the appropriate place, shifting keys as necessary.
 - If there is no space at the current leaf node (already has 2d keys), we have several strategies:
     - Median split: Our target node has 2d + 1 keys; split it into 2 nodes of d keys each and a median; try to promote/insert the median key one step higher (parent node). If the parent node has no space, continue the process one level up. This how the data structure grows in height.
+    - Lending scheme: Ensures that splitting only happens when the node and its siblings are at capacity. If the node has a right sibling and the right sibline has < 2d keys, shift the rightmost key of the current node up to the parent and move the rightmost key of the parent down to the right sibling (as the leftmost node). Mirror the process for the left sibling node. If both left and right siblings are "full," then perform the median split strategy.
 
 Delete:
 
@@ -57,5 +58,5 @@ Delete:
 - In this way, the key that we are deleting is always in a leaf.
 - What if deleting a key at a leaf node violates the property d <= m <= 2d? Two cases:
     - Check the sibling node(s). If the sibling has > d keys, we can **"borrow"** a key from that sibling.
-    - If we are borrowing from the right sibling, after deletion from the current node, we take the leftmost key, move it up to the parent, and take the key from the parent that it is replacing and move it down to the original node. If it is left sibling, same thing but with rightmost key.
+    - If we are borrowing from the right sibling, after deletion from the current node, we take the sibling's leftmost key, move it up to the parent, and take the key from the parent that it is replacing and move it down to the original node. If it is left sibling, same thing but with rightmost key.
     - If no available siblings have keys to spare without violating this property, we will **merge** our current node with a sibling node AND the parent node of those two siblings to create a single node. Pointer updates and recursive deletion will be necessary.
